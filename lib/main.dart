@@ -1,7 +1,9 @@
+import 'package:e_commerce/core/app_router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'core/resources/app_theme.dart';
+import 'l10n/app_tr.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -16,30 +18,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      builder: (context, child) {
+        LocalizationService.instance.update(context);
+        return child!;
+      },
       title: 'E-Commerce',
       theme: AppTheme.lightTheme,
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          "Hallo World",
-        ),
-      ),
+      routerConfig: appRouter,
+      debugShowCheckedModeBanner: false,
+      locale: Locale('en'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
