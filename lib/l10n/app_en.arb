@@ -5,6 +5,12 @@
   "auth_prompt": "You want Authentic, here you go!",
   "auth_text": "Find it here, buy it now!",
   "welcome": "Welcome\nBack!",
+  "create_account": "Create an \naccount",
   "email": "Email",
-  "password": "Password"
+  "password": "Password",
+  "name": "Full Name",
+  "phone": "Phone",
+  "confirm": "Confirm Password",
+  "register_prompt_part1": "By clicking the ",
+  "register_prompt_part2": " button, you agree \nto the public offer"
 }
