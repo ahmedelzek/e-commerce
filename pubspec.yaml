@@ -17,6 +17,7 @@ dependencies:
   l10n_flutter: ^1.0.7
   intl: any
   flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.2.2
 
 dev_dependencies:
   flutter_test:

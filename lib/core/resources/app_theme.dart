@@ -19,7 +19,7 @@ abstract class AppTheme{
       hintStyle: TextStyle(
         color: AppColors.grey,
         fontSize: 14,
-        fontWeight: FontWeight.w200,
+        fontWeight: FontWeight.w500,
       ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
@@ -28,7 +28,14 @@ abstract class AppTheme{
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-              color: AppColors.lightGrey,
+              color: AppColors.grey,
+              width: 1
+          )
+      ),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+              color: AppColors.grey,
               width: 1
           )
       ),
