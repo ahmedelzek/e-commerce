@@ -16,6 +16,7 @@ dependencies:
   go_router: ^17.0.0
   l10n_flutter: ^1.0.7
   intl: any
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +38,13 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-VariableFont_wght.ttf
+        - asset: assets/fonts/Montserrat-Black.ttf
+        - asset: assets/fonts/Montserrat-Bold.ttf
+        - asset: assets/fonts/Montserrat-ExtraBold.ttf
+        - asset: assets/fonts/Montserrat-ExtraLight.ttf
+        - asset: assets/fonts/Montserrat-Light.ttf
+        - asset: assets/fonts/Montserrat-Medium.ttf
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+        - asset: assets/fonts/Montserrat-Thin.ttf
 

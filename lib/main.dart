@@ -2,6 +2,7 @@ import 'package:e_commerce/core/app_router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/resources/app_theme.dart';
 import 'l10n/app_tr.dart';
 
@@ -18,18 +19,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      builder: (context, child) {
-        LocalizationService.instance.update(context);
-        return child!;
-      },
-      title: 'E-Commerce',
-      theme: AppTheme.lightTheme,
-      routerConfig: appRouter,
-      debugShowCheckedModeBanner: false,
-      locale: Locale('en'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+    return ScreenUtilInit(
+      designSize: Size(390, 844),
+      child: MaterialApp.router(
+        builder: (context, child) {
+          LocalizationService.instance.update(context);
+          return child!;
+        },
+        title: 'E-Commerce',
+        theme: AppTheme.lightTheme,
+        routerConfig: appRouter,
+        debugShowCheckedModeBanner: false,
+        locale: Locale('en'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
 }
