@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import '../../data/repos/auth_repo_impl.dart';
 import '../../domain/use_cases/login_use_case.dart';
 import '../../domain/use_cases/register_use_case.dart';
+import '../../features/auth/cubit/login/login_cubit.dart';
 import '../../features/auth/cubit/register/register_cubit.dart';
 import '../network/api_helper.dart';
 
@@ -24,6 +25,6 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => RegisterUseCase(repo: sl()));
 
   //Cubits
-  //sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
+  sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
   sl.registerFactory(() => RegisterCubit(registerUseCase: sl()));
 }

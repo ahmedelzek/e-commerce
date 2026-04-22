@@ -12,5 +12,6 @@
   "phone": "Phone",
   "confirm": "Confirm Password",
   "register_prompt_part1": "By clicking the ",
-  "register_prompt_part2": " button, you agree \nto the public offer"
+  "register_prompt_part2": " button, you agree \nto the public offer",
+  "login_success": "Login Successfully\n Welcome"
 }
