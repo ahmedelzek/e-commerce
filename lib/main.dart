@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'core/di/injector.dart';
 import 'core/resources/app_theme.dart';
 import 'l10n/app_tr.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  await initDependencies();
   await Future.delayed(const Duration(seconds: 2));
   FlutterNativeSplash.remove();
   runApp(const MyApp());

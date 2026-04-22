@@ -7,12 +7,14 @@ class CustomizedButton extends StatelessWidget {
   final Function()? onTap;
   final double? horizontalMargin;
   final double? verticalMargin;
+  final bool clickAble;
   final bool isSecondBtn;
 
   const CustomizedButton({
     super.key,
     required this.title,
     this.isSecondBtn = false,
+    this.clickAble = true,
     this.onTap,
     this.horizontalMargin,
     this.verticalMargin,
@@ -38,13 +40,17 @@ class CustomizedButton extends StatelessWidget {
               : null,
         ),
 
-        child: Text(
+        child: clickAble ? Text(
           title,
           style: TextStyle(
             fontSize: 20.sp,
             fontWeight: FontWeight.w600,
             color: !isSecondBtn?AppColors.white: AppColors.red,
           ),
+        ):SizedBox(
+          height: 24.h,
+          width: 24.w,
+          child: CircularProgressIndicator(color: AppColors.white),
         ),
       ),
     );

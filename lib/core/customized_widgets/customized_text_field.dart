@@ -8,6 +8,7 @@ class CustomizedTextField extends StatefulWidget {
   final String? hintText;
   final String? prefixIcon;
   final bool isPassword;
+  final bool isPhone;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final Function()? onTap;
@@ -20,6 +21,7 @@ class CustomizedTextField extends StatefulWidget {
     this.validator,
     this.onTap,
     this.isPassword = false,
+    this.isPhone = false,
   });
 
   @override
@@ -43,7 +45,8 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
       validator: widget.validator,
       onTap: widget.onTap,
       minLines: 1,
-      keyboardType: TextInputType.multiline,
+      keyboardType:
+          !widget.isPhone ? TextInputType.multiline : TextInputType.phone,
       decoration: InputDecoration(
         prefixIcon:
             widget.prefixIcon != null
@@ -62,8 +65,8 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
                   },
                   child:
                       _obscureText
-                          ? Icon(Icons.visibility, color: AppColors.grey,)
-                          : Icon(Icons.visibility_off, color: AppColors.grey,),
+                          ? Icon(Icons.visibility, color: AppColors.grey)
+                          : Icon(Icons.visibility_off, color: AppColors.grey),
                 )
                 : null,
         hintText: widget.hintText,
