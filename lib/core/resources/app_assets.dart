@@ -1,6 +1,11 @@
 abstract class AppImages{
   static const String base = "assets/images";
   static const String authImage = "$base/auth_image.png";
+  static const String dummyImage = "$base/dummy_image.png";
+  static const String appLogo = "$base/app_logo.png";
+  static const String emptyOrder = "$base/empty_order_image.png";
+  static const String categoryImage = "$base/category_image.png";
+  static const String slideImage = "$base/slide_image.png";
 }
 
 abstract class AppIcons{

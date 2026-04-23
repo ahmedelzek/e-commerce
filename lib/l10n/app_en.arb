@@ -16,5 +16,7 @@
   "login_success": "Login Successfully\n Welcome",
   "home": "Home",
   "profile": "Profile",
-  "cart": "Cart"
+  "cart": "Cart",
+  "all_featured": "All Featured",
+  "recommended": "Recommended"
 }

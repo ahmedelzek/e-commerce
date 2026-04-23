@@ -1,6 +1,6 @@
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
-import 'package:e_commerce/features/master/pages/widgets/bottom_nav_bar_icons.dart';
+import 'package:e_commerce/features/master/widgets/bottom_nav_bar_icons.dart';
 import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
 
