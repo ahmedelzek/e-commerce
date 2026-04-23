@@ -1,4 +1,6 @@
 import 'package:e_commerce/core/app_router/app_router_keys.dart';
+import 'package:e_commerce/core/cache/cache_helper.dart';
+import 'package:e_commerce/core/cache/cache_keys.dart';
 import 'package:e_commerce/features/auth/views/login/login_screen.dart';
 import 'package:e_commerce/features/auth/views/main_auth/auth_screen.dart';
 import 'package:e_commerce/features/auth/views/register/register_screen.dart';
@@ -6,7 +8,7 @@ import 'package:e_commerce/features/master/master_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRouterKeys.master,
+  initialLocation: AppRouterKeys.authKey,
   routes: [
     GoRoute(
       path: AppRouterKeys.loginKey,
@@ -21,13 +23,18 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRouterKeys.authKey,
       name: AppRouterKeys.authKey,
-      builder: (context, state) => AuthScreen(),
+      builder: (context, state) {
+        if (CacheHelper.getValue(CacheKeys.accessToken) != null) {
+          return MasterScreen();
+        } else {
+          return AuthScreen();
+        }
+      },
     ),
     GoRoute(
       path: AppRouterKeys.master,
       name: AppRouterKeys.master,
       builder: (context, state) => MasterScreen(),
     ),
-
   ],
 );

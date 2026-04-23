@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/app_router/app_router_keys.dart';
 import 'package:e_commerce/core/customized_widgets/customized_app_snack_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/customized_widgets/customized_text_field.dart';
@@ -29,6 +30,7 @@ class LoginScreen extends StatelessWidget {
               context,
               "${tr.login_success} ${state.user.name}!",
             );
+            context.go(AppRouterKeys.master);
           }else if (state is LoginErrorState){
             AppSnackBar.showError(context, state.error);
           }

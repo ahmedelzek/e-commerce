@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_commerce/domain/repos/auth_repo.dart';
+import 'package:e_commerce/domain/contract/auth_repo.dart';
 
 class RegisterUseCase {
   final AuthRepo repo;

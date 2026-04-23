@@ -4,7 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomizedSlidesItems extends StatelessWidget {
-  const CustomizedSlidesItems({super.key});
+  final String title;
+  final String description;
+  final String? imagePath;
+
+  const CustomizedSlidesItems({
+    super.key,
+    required this.title,
+    required this.description,
+    this.imagePath,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,12 @@ class CustomizedSlidesItems extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         child: Stack(
           children: [
-            Positioned.fill(child: Image.asset(AppImages.slideImage)),
+            Positioned.fill(
+              child:
+                  imagePath == null
+                      ? Image.asset(AppImages.slideImage)
+                      : Image.network(imagePath??""),
+            ),
             Positioned(
               left: 16,
               top: 0,
@@ -26,7 +40,7 @@ class CustomizedSlidesItems extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '50-40% OFF',
+                    title,
                     style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -35,7 +49,7 @@ class CustomizedSlidesItems extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Now in (product)',
+                    description,
                     style: TextStyle(fontSize: 12.sp, color: AppColors.white),
                   ),
                   Text(

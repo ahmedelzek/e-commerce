@@ -5,7 +5,7 @@ import 'package:e_commerce/core/network/end_points.dart';
 import 'package:e_commerce/data/models/login_model.dart';
 import 'package:e_commerce/data/models/register_model.dart';
 import 'package:e_commerce/domain/entities/user_entity.dart';
-import 'package:e_commerce/domain/repos/auth_repo.dart';
+import 'package:e_commerce/domain/contract/auth_repo.dart';
 
 import '../../core/cache/cache_helper.dart';
 import '../../core/network/api_response.dart';
