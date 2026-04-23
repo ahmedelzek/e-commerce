@@ -10,6 +10,9 @@ abstract class AppIcons{
   static const String passwordIcon = "$base/password_icon.svg";
   static const String profileIcon = "$base/profile_icon.svg";
   static const String emailIcon = "$base/email_icon.svg";
+  static const String homeIcon = "$base/home_icon.svg";
+  static const String cartIcon = "$base/cart_icon.svg";
+  static const String profileIcon2 = "$base/profile_icon2.svg";
   static const String onboarding1 = "$base/onboarding_image1.svg";
   static const String onboarding2 = "$base/onboarding_image2.svg";
   static const String onboarding3 = "$base/onboarding_image3.svg";
