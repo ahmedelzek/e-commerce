@@ -5,36 +5,40 @@ import 'package:e_commerce/features/auth/views/login/login_screen.dart';
 import 'package:e_commerce/features/auth/views/main_auth/auth_screen.dart';
 import 'package:e_commerce/features/auth/views/register/register_screen.dart';
 import 'package:e_commerce/features/master/master_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-final GoRouter appRouter = GoRouter(
-  initialLocation: AppRouterKeys.authKey,
-  routes: [
-    GoRoute(
-      path: AppRouterKeys.loginKey,
-      name: AppRouterKeys.loginKey,
-      builder: (context, state) => LoginScreen(),
-    ),
-    GoRoute(
-      path: AppRouterKeys.registerKey,
-      name: AppRouterKeys.registerKey,
-      builder: (context, state) => RegisterScreen(),
-    ),
-    GoRoute(
-      path: AppRouterKeys.authKey,
-      name: AppRouterKeys.authKey,
-      builder: (context, state) {
-        if (CacheHelper.getValue(CacheKeys.accessToken) != null) {
-          return MasterScreen();
-        } else {
-          return AuthScreen();
-        }
-      },
-    ),
-    GoRoute(
-      path: AppRouterKeys.master,
-      name: AppRouterKeys.master,
-      builder: (context, state) => MasterScreen(),
-    ),
-  ],
-);
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+late final GoRouter appRouter;
+
+Future<void> initRouter() async {
+  final token = await CacheHelper.getValue(CacheKeys.accessToken);
+  final isLoggedIn = token != null && token.toString().isNotEmpty;
+
+  appRouter = GoRouter(
+    navigatorKey: navigatorKey,
+    initialLocation: isLoggedIn ? AppRouterKeys.master : AppRouterKeys.authKey,
+    routes: [
+      GoRoute(
+        path: AppRouterKeys.loginKey,
+        name: AppRouterKeys.loginKey,
+        builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.registerKey,
+        name: AppRouterKeys.registerKey,
+        builder: (context, state) => RegisterScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.authKey,
+        name: AppRouterKeys.authKey,
+        builder: (context, state) => AuthScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.master,
+        name: AppRouterKeys.master,
+        builder: (context, state) => MasterScreen(),
+      ),
+    ],
+  );
+}

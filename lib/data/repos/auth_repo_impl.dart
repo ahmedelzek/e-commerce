@@ -2,9 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce/core/cache/cache_keys.dart';
 import 'package:e_commerce/core/network/api_helper.dart';
 import 'package:e_commerce/core/network/end_points.dart';
-import 'package:e_commerce/data/models/login_model.dart';
-import 'package:e_commerce/data/models/register_model.dart';
-import 'package:e_commerce/domain/entities/user_entity.dart';
+import 'package:e_commerce/data/models/auth/login_model.dart';
+import 'package:e_commerce/data/models/auth/register_model.dart';
+import 'package:e_commerce/domain/entities/user/user_entity.dart';
 import 'package:e_commerce/domain/contract/auth_repo.dart';
 
 import '../../core/cache/cache_helper.dart';

@@ -1,4 +1,4 @@
-import '../../domain/entities/slider_response_entity.dart';
+import '../../../domain/entities/slider/slider_response_entity.dart';
 import 'slider_model.dart';
 
 class SliderResponseModel extends SliderResponseEntity {

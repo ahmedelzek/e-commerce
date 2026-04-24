@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:e_commerce/core/cache/cache_keys.dart';
 
 import '../cache/cache_helper.dart';
+import '../cache/cache_keys.dart';
 import 'api_response.dart';
 import 'end_points.dart';
 
@@ -10,16 +10,10 @@ class APIHelper {
   static final Dio _dio = Dio(BaseOptions(baseUrl: EndPoints.baseUrl));
 
   static Future init() async {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
+    _dio.interceptors.add(InterceptorsWrapper(
+        onRequest: (options, handler) {
           print("--- Headers : ${options.headers.toString()}");
           print("--- endpoint : ${options.path.toString()}");
-          final isAuthorized = options.extra['isAuthorized'] ?? true;
-          if (isAuthorized) {
-            options.headers['Authorization'] =
-            'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken) ?? ''}';
-          }
           return handler.next(options);
         },
         onResponse: (response, handler) {
@@ -30,31 +24,20 @@ class APIHelper {
           print("--- Error : ${error.response?.data.toString()}");
           var errorResponse = error.response?.data as Map<String, dynamic>;
           try {
-            if (errorResponse['message'].toString().contains(
-              'Token has expired.',
-            )) {
-              if (error.requestOptions.path.contains('refresh_token')) {
-                return handler.reject(error);
-              }
-
-              var result = await _dio.post(
-                CacheKeys.refreshToken,
-                options: Options(
-                  headers: {
+            if (errorResponse['message']
+                .toString()
+                .contains('Token has expired.')) {
+              var result = await _dio.post(EndPoints.refreshToken,
+                  options: Options(headers: {
                     'Authorization':
-                    'Bearer ${await CacheHelper.getValue(CacheKeys.refreshToken)}',
-                  },
-                ),
-              );
+                    'Bearer ${await CacheHelper.getValue(CacheKeys.refreshToken)}'
+                  }));
               var accessData = result.data as Map<String, dynamic>;
               await CacheHelper.setValue(
-                CacheKeys.accessToken,
-                accessData['access_token'],
-              );
+                  CacheKeys.accessToken, accessData['access_token']);
 
               // Retry original request
               final options = error.requestOptions;
-
               if (options.data is FormData) {
                 final oldFormData = options.data as FormData;
 
@@ -73,17 +56,16 @@ class APIHelper {
                 options.data = FormData.fromMap(formMap);
               }
               options.headers['Authorization'] =
-              'Bearer ${CacheHelper.getValue(CacheKeys.accessToken) ?? ''}';
+              'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}';
               final response = await _dio.fetch(options);
               return handler.resolve(response);
             }
           } catch (e) {
-            return handler.reject(error);
+
           }
 
           return handler.next(error);
-        },
-      ),
+        })
     );
   }
 
@@ -96,11 +78,12 @@ class APIHelper {
     bool isAuthorized = true,
   }) async {
     try {
-      var response = await _dio.get(
-        endPoint,
-        queryParameters: queryParams,
-        options: Options(extra: {'isAuthorized': isAuthorized}),
-      );
+      var response = await _dio.get(endPoint, queryParameters: queryParams, options: Options(
+          headers: {
+            if(isAuthorized)'Authorization':
+            'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
+          }
+      ));
       return ApiResponse.fromResponse(response);
     } catch (e) {
       return ApiResponse.fromError(e);
@@ -118,8 +101,7 @@ class APIHelper {
     try {
       var response = await _dio.post(
         endPoint,
-        data:
-        data == null
+        data: data == null
             ? null
             : isFormData
             ? FormData.fromMap(data)
@@ -141,8 +123,7 @@ class APIHelper {
     try {
       var response = await _dio.put(
         endPoint,
-        data:
-        data == null
+        data: data == null
             ? null
             : isFormData
             ? FormData.fromMap(data)
@@ -163,8 +144,7 @@ class APIHelper {
     try {
       var response = await _dio.delete(
         endPoint,
-        data:
-        data == null
+        data: data == null
             ? null
             : isFormData
             ? FormData.fromMap(data)

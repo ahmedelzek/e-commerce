@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/core/network/api_helper.dart';
 import 'package:e_commerce/core/network/end_points.dart';
-import 'package:e_commerce/data/models/slider_response_model.dart';
-import 'package:e_commerce/domain/entities/slider_response_entity.dart';
+import 'package:e_commerce/data/models/slider/slider_response_model.dart';
+import 'package:e_commerce/domain/entities/slider/slider_response_entity.dart';
 import 'package:e_commerce/domain/contract/get_slider_repo.dart';
 
 import '../../core/network/api_response.dart';

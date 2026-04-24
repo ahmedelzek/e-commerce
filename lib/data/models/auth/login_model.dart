@@ -1,6 +1,6 @@
-import 'package:e_commerce/domain/entities/login_entity.dart';
+import 'package:e_commerce/domain/entities/auth/login_entity.dart';
 
-import 'user_model.dart';
+import '../user/user_model.dart';
 
 class LoginModel extends LoginEntity {
   const LoginModel({

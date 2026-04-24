@@ -1,4 +1,4 @@
-import 'package:e_commerce/domain/entities/user_entity.dart';
+import 'package:e_commerce/domain/entities/user/user_entity.dart';
 
 class LoginEntity {
   final String accessToken;

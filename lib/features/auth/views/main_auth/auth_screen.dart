@@ -55,7 +55,7 @@ class AuthScreen extends StatelessWidget {
               SizedBox(height: 24.h),
               CustomizedButton(
                 title: tr.login,
-                onTap: () => context.push(AppRouterKeys.loginKey),
+                onTap: () => context.pushNamed(AppRouterKeys.loginKey),
               ),
               SizedBox(height: 15.h),
               CustomizedButton(
