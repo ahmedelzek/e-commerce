@@ -1,4 +1,3 @@
-import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
 import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ class CustomizedProductItem extends StatelessWidget {
   final double price;
   final double reviewCount;
   final double rate;
+  final Function()? onTap;
 
   const CustomizedProductItem({
     super.key,
@@ -21,50 +21,54 @@ class CustomizedProductItem extends StatelessWidget {
     required this.price,
     required this.rate,
     required this.reviewCount,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            imagePath,
-            width: double.infinity,
-            height: 195.h,
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            productName,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16.sp,
-              color: AppColors.black,
+    return InkWell(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(
+              imagePath,
+              width: double.infinity,
+              height: 195.h,
             ),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            description,
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 10.sp,
-              color: AppColors.black,
+            SizedBox(height: 8.h),
+            Text(
+              productName,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp,
+                color: AppColors.black,
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            "$price-${LocalizationService.instance.tr.eg}",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 12.sp,
-              color: AppColors.black,
+            SizedBox(height: 4.h),
+            Text(
+              description,
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 10.sp,
+                color: AppColors.black,
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          _buildStarRating(rating: rate, reviewCount: reviewCount),
-        ],
+            SizedBox(height: 4.h),
+            Text(
+              "$price-${LocalizationService.instance.tr.eg}",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 12.sp,
+                color: AppColors.black,
+              ),
+            ),
+            SizedBox(height: 4.h),
+            _buildStarRating(rating: rate, reviewCount: reviewCount),
+          ],
+        ),
       ),
     );
   }

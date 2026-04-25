@@ -38,6 +38,7 @@ class CustomizedButton extends StatelessWidget {
           border: isSecondBtn
               ? Border.all(color: AppColors.red, width: 2)
               : null,
+          borderRadius: BorderRadius.circular(8.sp)
         ),
 
         child: clickAble ? Text(

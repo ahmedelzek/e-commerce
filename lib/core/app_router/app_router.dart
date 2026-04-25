@@ -1,10 +1,12 @@
 import 'package:e_commerce/core/app_router/app_router_keys.dart';
 import 'package:e_commerce/core/cache/cache_helper.dart';
 import 'package:e_commerce/core/cache/cache_keys.dart';
+import 'package:e_commerce/domain/entities/product/product_entity.dart';
 import 'package:e_commerce/features/auth/views/login/login_screen.dart';
 import 'package:e_commerce/features/auth/views/main_auth/auth_screen.dart';
 import 'package:e_commerce/features/auth/views/register/register_screen.dart';
 import 'package:e_commerce/features/master/master_screen.dart';
+import 'package:e_commerce/features/product/views/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,6 +40,14 @@ Future<void> initRouter() async {
         path: AppRouterKeys.master,
         name: AppRouterKeys.master,
         builder: (context, state) => MasterScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.product,
+        name: AppRouterKeys.product,
+        builder: (context, state) {
+          final product = state.extra as ProductEntity;
+          return ProductScreen(product: product,);
+        },
       ),
     ],
   );

@@ -20,5 +20,7 @@
   "all_featured": "All Featured",
   "recommended": "Recommended",
   "eg": "EGP",
-  "retry": "Retry"
+  "retry": "Retry",
+  "product": "Product",
+  "add_to_cart": "Add To Cart"
 }

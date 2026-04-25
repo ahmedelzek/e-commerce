@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce/core/app_router/app_router_keys.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
@@ -10,6 +11,7 @@ import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../core/customized_widgets/customized_product_item.dart';
@@ -84,7 +86,6 @@ class HomePage extends StatelessWidget {
                           itemCount: categories.length,
                           itemBuilder:
                               (context, index) => CustomizedCategoryItem(
-                                key: ValueKey(categories[index].id),
                                 name: categories[index].title,
                                 imagePath: categories[index].imagePath,
                               ),
@@ -117,7 +118,6 @@ class HomePage extends StatelessWidget {
                       SizedBox(height: 12.h),
                       Center(
                         child: AnimatedSmoothIndicator(
-                          // ← replace SmoothPageIndicator
                           activeIndex: cubit.currentIndex,
                           count: sliders.length,
                           effect: ScrollingDotsEffect(
@@ -157,6 +157,7 @@ class HomePage extends StatelessWidget {
                               price: product.price,
                               rate: product.rating,
                               reviewCount: product.price,
+                              onTap: ()=>context.push(AppRouterKeys.product, extra: product),
                             );
                           },
                         ),
