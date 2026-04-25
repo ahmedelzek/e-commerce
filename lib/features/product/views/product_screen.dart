@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
 import 'package:e_commerce/features/product/views/widgets/quantity_selector.dart';
@@ -15,16 +16,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final tr = LocalizationService.instance.tr;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          tr.product,
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
+      appBar: CustomizedAppBar(title: tr.product, context: context),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         child: Column(

@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "login": "Login",
+  "logout": "Logout",
   "register": "Register",
   "auth_prompt": "You want Authentic, here you go!",
   "auth_text": "Find it here, buy it now!",
@@ -22,5 +23,9 @@
   "eg": "EGP",
   "retry": "Retry",
   "product": "Product",
-  "add_to_cart": "Add To Cart"
+  "add_to_cart": "Add To Cart",
+  "my_profile": "My Profile",
+  "settings": "Settings",
+  "my_favorites": "My Favorites",
+  "my_orders": "My Orders"
 }

@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/master/pages/cart/views/cart_page.dart';
+import 'package:e_commerce/features/master/pages/items/views/items_page.dart';
 import 'package:e_commerce/features/master/pages/home/views/home_page.dart';
 import 'package:e_commerce/features/master/pages/profile/views/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +32,6 @@ List<BottomNavigationBarItem> generateBottomNavItems(
 
 List<Widget> taps = [
   const HomePage(),
-  const CartPage(),
+  const ItemsPage(),
   const ProfilePage(),
 ];

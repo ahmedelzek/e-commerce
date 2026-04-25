@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/app_router/app_router_keys.dart';
+import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_app_snack_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/customized_widgets/customized_text_field.dart';
@@ -38,17 +39,7 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           final cubit = LoginCubit.get(context);
           return Scaffold(
-            appBar: AppBar(
-              leading: Container(
-                margin: EdgeInsets.symmetric(horizontal: 30.w),
-                child: InkWell(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: Icon(Icons.arrow_back_ios),
-                ),
-              ),
-            ),
+            appBar: CustomizedAppBar(title: tr.login, context: context),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: Form(

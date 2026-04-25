@@ -6,6 +6,7 @@ abstract class AppImages{
   static const String emptyOrder = "$base/empty_order_image.png";
   static const String categoryImage = "$base/category_image.png";
   static const String slideImage = "$base/slide_image.png";
+  static const String avatar = "$base/avatar.png";
 }
 
 abstract class AppIcons{
@@ -21,4 +22,8 @@ abstract class AppIcons{
   static const String onboarding1 = "$base/onboarding_image1.svg";
   static const String onboarding2 = "$base/onboarding_image2.svg";
   static const String onboarding3 = "$base/onboarding_image3.svg";
+  static const String settingsIcon = "$base/settings_icon.svg";
+  static const String bagIcon = "$base/bag_icon.svg";
+  static const String favoriteIcon = "$base/favorite_icon.svg";
+  static const String locationIcon = "$base/location_icon.svg";
 }
