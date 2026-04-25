@@ -6,4 +6,5 @@ abstract class EndPoints{
   static const String accessToken = "access_token";
   static const String getSliders= "sliders";
   static const String products= "products";
+  static const String categories= "categories";
 }

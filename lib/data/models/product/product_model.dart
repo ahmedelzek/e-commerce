@@ -11,7 +11,7 @@ class ProductModel extends ProductEntity {
     required super.rating,
     required super.isFavorite,
     required super.bestSeller,
-    required super.category,
+    super.category,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -24,7 +24,9 @@ class ProductModel extends ProductEntity {
       rating: (json['rating'] as num).toDouble(),
       isFavorite: json['is_favorite'] as bool,
       bestSeller: json['best_seller'] as int,
-      category: CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
+      category: json['category'] != null
+          ? CategoryModel.fromJson(json['category'] as Map<String, dynamic>)
+          : null,
     );
   }
 

@@ -19,5 +19,6 @@
   "cart": "Cart",
   "all_featured": "All Featured",
   "recommended": "Recommended",
-  "eg": "EGP"
+  "eg": "EGP",
+  "retry": "Retry"
 }

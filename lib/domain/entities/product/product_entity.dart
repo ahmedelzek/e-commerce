@@ -9,7 +9,7 @@ class ProductEntity {
   final double rating;
   final bool isFavorite;
   final int bestSeller;
-  final CategoryEntity category;
+  final CategoryEntity? category;
 
   const ProductEntity({
     required this.id,

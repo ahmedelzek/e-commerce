@@ -1,8 +1,11 @@
+import 'package:e_commerce/data/repos/category_repo_impl.dart';
 import 'package:e_commerce/data/repos/get_slider_repo_impl.dart';
 import 'package:e_commerce/data/repos/product_repo_impl.dart';
 import 'package:e_commerce/domain/contract/auth_repo.dart';
+import 'package:e_commerce/domain/contract/category_repo.dart';
 import 'package:e_commerce/domain/contract/get_slider_repo.dart';
-import 'package:e_commerce/domain/contract/products_repo.dart';
+import 'package:e_commerce/domain/contract/product_repo.dart';
+import 'package:e_commerce/domain/use_cases/get_categories_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_products_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_sliders_use_case.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_cubit.dart';
@@ -29,17 +32,25 @@ Future<void> initDependencies() async {
     () => GetSlidersRepoImpl(apiHelper: sl()),
   );
   sl.registerLazySingleton<ProductRepo>(() => ProductRepoImpl(apiHelper: sl()));
+  sl.registerLazySingleton<CategoryRepo>(
+    () => CategoryRepoImpl(apiHelper: sl()),
+  );
 
   //UseCases
   sl.registerFactory(() => LoginUseCase(repo: sl()));
   sl.registerFactory(() => RegisterUseCase(repo: sl()));
   sl.registerFactory(() => GetSliderUseCase(repo: sl()));
   sl.registerFactory(() => GetProductsUseCase(repo: sl()));
+  sl.registerFactory(() => GetCategoriesUseCase(repo: sl()));
 
   //Cubits
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
   sl.registerFactory(() => RegisterCubit(registerUseCase: sl()));
   sl.registerFactory(
-    () => HomeCubit(getSliderUseCase: sl(), getProductsUseCase: sl()),
+    () => HomeCubit(
+      getSliderUseCase: sl(),
+      getProductsUseCase: sl(),
+      getCategoriesUseCase: sl(),
+    ),
   );
 }

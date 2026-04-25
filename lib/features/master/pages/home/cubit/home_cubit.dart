@@ -1,6 +1,7 @@
-import 'package:carousel_slider/carousel_controller.dart';
+import 'package:e_commerce/domain/entities/category/category_entity.dart';
 import 'package:e_commerce/domain/entities/product/product_entity.dart';
 import 'package:e_commerce/domain/entities/slider/slider_entity.dart';
+import 'package:e_commerce/domain/use_cases/get_categories_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_products_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_sliders_use_case.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_state.dart';
@@ -9,13 +10,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeCubit extends Cubit<HomeState> {
   final GetSliderUseCase getSliderUseCase;
   final GetProductsUseCase getProductsUseCase;
+  final GetCategoriesUseCase getCategoriesUseCase;
 
-  HomeCubit({required this.getSliderUseCase, required this.getProductsUseCase})
-    : super(HomeInitialState());
+  HomeCubit({
+    required this.getSliderUseCase,
+    required this.getProductsUseCase,
+    required this.getCategoriesUseCase,
+  }) : super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
   List<SliderEntity>? sliders;
   List<ProductEntity>? products;
+  List<CategoryEntity>? categories;
   int currentIndex = 0;
 
   getData() async {
@@ -23,23 +29,35 @@ class HomeCubit extends Cubit<HomeState> {
 
     final slidersResult = await getSliderUseCase.call();
     final productsResult = await getProductsUseCase.call();
+    final categoryResult = await getCategoriesUseCase.call();
+
+    String? errorMessage;
 
     slidersResult.fold(
-          (error) => emit(HomeErrorState(error: error)),
+          (error) => errorMessage = error,
           (slidersData) => sliders = slidersData.sliders,
     );
 
     productsResult.fold(
-          (error) => emit(HomeErrorState(error: error)),
+          (error) => errorMessage = error,
           (productsData) => products = productsData.products,
     );
 
-    if (sliders != null && products != null) {
+    categoryResult.fold(
+          (error) => errorMessage = error,
+          (categoriesData) => categories = categoriesData.categories,
+    );
+
+    print('sliders: ${sliders?.length}');
+    print('products: ${products?.length}');
+    print('categories: ${categories?.length}');
+
+    if (errorMessage != null) {
+      emit(HomeErrorState(error: errorMessage!));
+    } else if (sliders != null && products != null && categories != null) {
       emit(HomeSuccessState());
     }
   }
-
-
 
   void updateIndex(int index) {
     currentIndex = index;

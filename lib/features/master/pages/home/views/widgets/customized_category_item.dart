@@ -1,20 +1,26 @@
-import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomizedCategoryItem extends StatelessWidget {
-  const CustomizedCategoryItem({super.key});
+  final String imagePath;
+  final String name;
+
+  const CustomizedCategoryItem({super.key, required this.imagePath, required this.name});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ClipOval(
-          child: Image.asset(AppImages.categoryImage, width: 56.w, height: 56.h),
+          child: Image.network(
+            imagePath,
+            width: 56.w,
+            height: 56.h,
+          ),
         ),
         SizedBox(height: 4.h),
         Text(
-          "Fashion",
+          name,
           style: TextStyle(fontWeight: FontWeight.w400, fontSize: 10.sp),
         ),
       ],

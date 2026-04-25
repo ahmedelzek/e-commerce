@@ -1,4 +1,5 @@
 import '../../../domain/entities/category/category_entity.dart';
+import '../product/product_model.dart';
 
 class CategoryModel extends CategoryEntity {
   const CategoryModel({
@@ -6,6 +7,7 @@ class CategoryModel extends CategoryEntity {
     required super.title,
     required super.description,
     required super.imagePath,
+    required super.products,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
@@ -14,6 +16,10 @@ class CategoryModel extends CategoryEntity {
       title: json['title'] as String,
       description: json['description'] as String,
       imagePath: json['image_path'] as String,
+      products: (json['products'] as List<dynamic>?)
+          ?.whereType<Map<String, dynamic>>()
+          .map((e) => ProductModel.fromJson(e))
+          .toList() ?? [],
     );
   }
 

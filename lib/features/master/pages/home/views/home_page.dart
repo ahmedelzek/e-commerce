@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_cubit.dart';
@@ -21,9 +22,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final tr = LocalizationService.instance.tr;
     return BlocProvider(
-      create: (context) =>
-      sl<HomeCubit>()
-        ..getData(),
+      create: (context) => sl<HomeCubit>()..getData(),
       child: Scaffold(
         appBar: AppBar(
           title: Image.asset(AppImages.appLogo, width: 110.w, height: 32.h),
@@ -40,24 +39,41 @@ class HomePage extends StatelessWidget {
               }
 
               if (state is HomeErrorState) {
-                return Center(child: Text(state.error));
+                return Center(
+                  child: Column(
+                    children: [
+                      Text(state.error),
+                      CustomizedButton(
+                        title: tr.retry,
+                        horizontalMargin: 50.w,
+                        onTap: () => cubit.getData(),
+                      ),
+                    ],
+                  ),
+                );
               }
 
               if (state is HomeSuccessState) {
                 final sliders = cubit.sliders ?? [];
                 final products = cubit.products ?? [];
+                final categories = cubit.categories ?? [];
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 22.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 28.h),
-                      Text(
-                        tr.all_featured,
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.black,
+                      InkWell(
+                        onTap: () {
+                          print(categories.length);
+                        },
+                        child: Text(
+                          tr.all_featured,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.black,
+                          ),
                         ),
                       ),
                       SizedBox(height: 25.h),
@@ -65,9 +81,13 @@ class HomePage extends StatelessWidget {
                         height: 80.h,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 20,
+                          itemCount: categories.length,
                           itemBuilder:
-                              (context, index) => CustomizedCategoryItem(),
+                              (context, index) => CustomizedCategoryItem(
+                                key: ValueKey(categories[index].id),
+                                name: categories[index].title,
+                                imagePath: categories[index].imagePath,
+                              ),
                           separatorBuilder: (_, __) => SizedBox(width: 15.w),
                         ),
                       ),
@@ -77,22 +97,27 @@ class HomePage extends StatelessWidget {
                           height: 190.h,
                           autoPlay: true,
                           autoPlayInterval: const Duration(seconds: 3),
-                          autoPlayAnimationDuration: const Duration(milliseconds: 700),
+                          autoPlayAnimationDuration: const Duration(
+                            milliseconds: 700,
+                          ),
                           enlargeCenterPage: true,
                           viewportFraction: 1,
-                            onPageChanged: (index, reason) => cubit.updateIndex(index)
+                          onPageChanged:
+                              (index, reason) => cubit.updateIndex(index),
                         ),
-                        items: sliders.map((slider) {
-                          return CustomizedSlidesItems(
-                            title: slider.title ?? "",
-                            description: slider.description ?? "",
-                            imagePath: slider.imagePath,
-                          );
-                        }).toList(),
+                        items:
+                            sliders.map((slider) {
+                              return CustomizedSlidesItems(
+                                title: slider.title ?? "",
+                                description: slider.description ?? "",
+                                imagePath: slider.imagePath,
+                              );
+                            }).toList(),
                       ),
                       SizedBox(height: 12.h),
                       Center(
-                        child: AnimatedSmoothIndicator(   // ← replace SmoothPageIndicator
+                        child: AnimatedSmoothIndicator(
+                          // ← replace SmoothPageIndicator
                           activeIndex: cubit.currentIndex,
                           count: sliders.length,
                           effect: ScrollingDotsEffect(
@@ -117,12 +142,12 @@ class HomePage extends StatelessWidget {
                         child: GridView.builder(
                           itemCount: products.length,
                           gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16.w,
-                            mainAxisSpacing: 12.h,
-                            mainAxisExtent: 310.h,
-                          ),
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 16.w,
+                                mainAxisSpacing: 12.h,
+                                mainAxisExtent: 310.h,
+                              ),
                           itemBuilder: (context, index) {
                             final product = products[index];
                             return CustomizedProductItem(
