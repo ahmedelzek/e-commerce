@@ -30,7 +30,8 @@ class APIHelper {
               var result = await _dio.post(EndPoints.refreshToken,
                   options: Options(headers: {
                     'Authorization':
-                    'Bearer ${await CacheHelper.getValue(CacheKeys.refreshToken)}'
+                    'Bearer ${await CacheHelper.getValue(
+                        CacheKeys.refreshToken)}'
                   }));
               var accessData = result.data as Map<String, dynamic>;
               await CacheHelper.setValue(
@@ -78,7 +79,8 @@ class APIHelper {
     bool isAuthorized = true,
   }) async {
     try {
-      var response = await _dio.get(endPoint, queryParameters: queryParams, options: Options(
+      var response = await _dio.get(
+          endPoint, queryParameters: queryParams, options: Options(
           headers: {
             if(isAuthorized)'Authorization':
             'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
@@ -100,14 +102,20 @@ class APIHelper {
   }) async {
     try {
       var response = await _dio.post(
-        endPoint,
-        data: data == null
-            ? null
-            : isFormData
-            ? FormData.fromMap(data)
-            : data,
-      );
-      return ApiResponse.fromResponse(response);
+          endPoint,
+          data: data == null
+              ? null
+              : isFormData
+              ? FormData.fromMap(data)
+              : data,
+          options: Options(
+              headers: {
+                if(isAuthorized)'Authorization':
+                'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
+              }
+          )
+          );
+          return ApiResponse.fromResponse(response);
     } catch (e) {
       // ignore: avoid_print
       return ApiResponse.fromError(e);
@@ -122,14 +130,19 @@ class APIHelper {
   }) async {
     try {
       var response = await _dio.put(
-        endPoint,
-        data: data == null
-            ? null
-            : isFormData
-            ? FormData.fromMap(data)
-            : data,
-      );
-      return ApiResponse.fromResponse(response);
+          endPoint,
+          data: data == null
+              ? null
+              : isFormData
+              ? FormData.fromMap(data)
+              : data,
+          options: Options(
+              headers: {
+                if(isAuthorized)'Authorization':
+                'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
+              }
+          ));
+          return ApiResponse.fromResponse(response);
     } catch (e) {
       return ApiResponse.fromError(e);
     }
@@ -143,14 +156,19 @@ class APIHelper {
   }) async {
     try {
       var response = await _dio.delete(
-        endPoint,
-        data: data == null
-            ? null
-            : isFormData
-            ? FormData.fromMap(data)
-            : data,
-      );
-      return ApiResponse.fromResponse(response);
+          endPoint,
+          data: data == null
+              ? null
+              : isFormData
+              ? FormData.fromMap(data)
+              : data,
+          options: Options(
+              headers: {
+                if(isAuthorized)'Authorization':
+                'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
+              }
+          ));
+          return ApiResponse.fromResponse(response);
     } catch (e) {
       return ApiResponse.fromError(e);
     }

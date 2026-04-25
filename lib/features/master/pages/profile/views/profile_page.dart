@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/app_router/app_router_keys.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
 import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
@@ -7,6 +8,7 @@ import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../core/di/injector.dart';
 
@@ -20,7 +22,7 @@ class ProfilePage extends StatelessWidget {
       create: (context) => sl<ProfileCubit>()..getUserData(),
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
-          return Scaffold( // 👈 Scaffold always wraps everything
+          return Scaffold(
             appBar: AppBar(
               title: Text(
                 tr.profile,
@@ -56,17 +58,18 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         Center(
                           child: ClipOval(
-                            child: user.imagePath == null
-                                ? Image.asset(
-                              AppImages.avatar,
-                              height: 96.h,
-                              width: 96.w,
-                            )
-                                : Image.network(
-                              user.imagePath ?? "",
-                              height: 96.h,
-                              width: 96.h,
-                            ),
+                            child:
+                                user.imagePath == null
+                                    ? Image.asset(
+                                      AppImages.avatar,
+                                      height: 96.h,
+                                      width: 96.w,
+                                    )
+                                    : Image.network(
+                                      user.imagePath ?? "",
+                                      height: 96.h,
+                                      width: 96.h,
+                                    ),
                           ),
                         ),
                         SizedBox(height: 19.h),
@@ -82,6 +85,13 @@ class ProfilePage extends StatelessWidget {
                         CustomizedCard(
                           iconPath: AppIcons.profileIcon2,
                           title: tr.my_profile,
+                          onTap: () async {
+                           await context.push(
+                              AppRouterKeys.updateProfile,
+                              extra: state.user,
+                            );
+                           ProfileCubit.get(context).getUserData();
+                          },
                         ),
                         SizedBox(height: 25.h),
                         CustomizedCard(
@@ -106,15 +116,22 @@ class ProfilePage extends StatelessWidget {
                         ),
                         SizedBox(height: 40.h),
                         FilledButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            ProfileCubit.get(context).logout();
+                          },
                           style: ButtonStyle(
-                            backgroundColor: const WidgetStatePropertyAll<Color>(
-                              AppColors.white,
-                            ),
+                            backgroundColor:
+                                const WidgetStatePropertyAll<Color>(
+                                  AppColors.white,
+                                ),
                           ),
                           child: Row(
                             children: [
-                              Icon(Icons.logout, size: 24.r, color: AppColors.black),
+                              Icon(
+                                Icons.logout,
+                                size: 24.r,
+                                color: AppColors.black,
+                              ),
                               SizedBox(width: 20.w),
                               Text(
                                 tr.logout,

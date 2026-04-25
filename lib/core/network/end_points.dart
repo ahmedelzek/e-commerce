@@ -9,4 +9,5 @@ abstract class EndPoints {
   static const String products = "products";
   static const String categories = "categories";
   static const String user = "get_user_data";
+  static const String updateProfile = "update_profile";
 }

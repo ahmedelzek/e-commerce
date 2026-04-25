@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/core/network/api_helper.dart';
+import 'package:e_commerce/data/models/user/update_profile_response_model.dart';
 import 'package:e_commerce/data/models/user/user_response_model.dart';
 import 'package:e_commerce/domain/contract/user_repo.dart';
+import 'package:e_commerce/domain/entities/user/update_profile_response_entity.dart';
 import 'package:e_commerce/domain/entities/user/user_response_entity.dart';
 
 import '../../core/network/api_response.dart';
@@ -27,9 +29,37 @@ class UserRepoImpl extends UserRepo {
         return left(result.message);
       }
     } catch (e) {
-      return left(ApiResponse
-          .fromError(e)
-          .message);
+      return left(ApiResponse.fromError(e).message);
+    }
+  }
+
+  @override
+  Future<Either<String, String>> updateUser({
+    required String name,
+    required double phone,
+    String? imagePath,
+  }) async {
+    try {
+      var result = await apiHelper.putRequest(
+        endPoint: EndPoints.updateProfile,
+        data: {
+          'name': name,
+          'image': imagePath,
+          'phone': phone,
+        },
+      );
+
+      if (result.status) {
+        var response = UpdateProfileResponseModel.fromJson(
+          result.data as Map<String, dynamic>,
+        );
+
+        return Right(response.message);
+      } else {
+        return left(result.message);
+      }
+    } catch (e) {
+      return left(ApiResponse.fromError(e).message);
     }
   }
 }

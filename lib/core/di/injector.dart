@@ -11,8 +11,10 @@ import 'package:e_commerce/domain/use_cases/get_categories_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_products_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_sliders_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_user_use_case.dart';
+import 'package:e_commerce/domain/use_cases/update_profile_use_case.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_cubit.dart';
 import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
+import 'package:e_commerce/features/my_profile/cubit/update_profile_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/repos/auth_repo_impl.dart';
@@ -48,6 +50,7 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => GetProductsUseCase(repo: sl()));
   sl.registerFactory(() => GetCategoriesUseCase(repo: sl()));
   sl.registerFactory(() => GetUserUseCase(repo: sl()));
+  sl.registerFactory(() => UpdateProfileUseCase(repo: sl()));
 
   //Cubits
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
@@ -60,4 +63,5 @@ Future<void> initDependencies() async {
     ),
   );
   sl.registerFactory(() => ProfileCubit(getUserUseCase: sl()));
+  sl.registerFactory(() => UpdateProfileCubit(updateProfileUseCase: sl()));
 }
