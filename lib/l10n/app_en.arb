@@ -28,5 +28,13 @@
   "settings": "Settings",
   "my_favorites": "My Favorites",
   "my_orders": "My Orders",
-  "save": "Save"
+  "save": "Save",
+  "added_to_cart": "Added To Cart",
+  "shopping_list": "Shopping List",
+  "total": "Total Order",
+  "subtotal": "Subtotal",
+  "tax": "Tax and Fees",
+  "delivery_fee": "Delivery Fee",
+  "checkout": "Checkout",
+  "cart_empty": "Cart Is Empty"
 }

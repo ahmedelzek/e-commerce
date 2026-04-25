@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_commerce/domain/entities/user/update_profile_response_entity.dart';
 import 'package:e_commerce/domain/entities/user/user_response_entity.dart';
 
 abstract class UserRepo {

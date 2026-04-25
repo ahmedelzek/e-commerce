@@ -3,7 +3,6 @@ import 'package:e_commerce/core/network/api_helper.dart';
 import 'package:e_commerce/data/models/user/update_profile_response_model.dart';
 import 'package:e_commerce/data/models/user/user_response_model.dart';
 import 'package:e_commerce/domain/contract/user_repo.dart';
-import 'package:e_commerce/domain/entities/user/update_profile_response_entity.dart';
 import 'package:e_commerce/domain/entities/user/user_response_entity.dart';
 
 import '../../core/network/api_response.dart';

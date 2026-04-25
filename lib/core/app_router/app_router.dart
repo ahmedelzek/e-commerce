@@ -6,6 +6,7 @@ import 'package:e_commerce/domain/entities/user/user_entity.dart';
 import 'package:e_commerce/features/auth/views/login/login_screen.dart';
 import 'package:e_commerce/features/auth/views/main_auth/auth_screen.dart';
 import 'package:e_commerce/features/auth/views/register/register_screen.dart';
+import 'package:e_commerce/features/cart/views/cart_screen.dart';
 import 'package:e_commerce/features/master/master_screen.dart';
 import 'package:e_commerce/features/my_profile/views/update_profile_screen.dart';
 import 'package:e_commerce/features/product/views/product_screen.dart';
@@ -54,10 +55,15 @@ Future<void> initRouter() async {
       GoRoute(
         path: AppRouterKeys.updateProfile,
         name: AppRouterKeys.updateProfile,
-        builder: (context, state){
+        builder: (context, state) {
           final user = state.extra as UserEntity;
-          return UpdateProfileScreen(user: user,);
+          return UpdateProfileScreen(user: user);
         },
+      ),
+      GoRoute(
+        path: AppRouterKeys.cart,
+        name: AppRouterKeys.cart,
+        builder: (context, state) => CartScreen(),
       ),
     ],
   );

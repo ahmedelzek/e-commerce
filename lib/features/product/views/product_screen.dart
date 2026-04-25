@@ -1,16 +1,34 @@
 import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
+import 'package:e_commerce/core/customized_widgets/customized_app_snack_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
+import 'package:e_commerce/features/cart/cubit/cart_cubit.dart';
 import 'package:e_commerce/features/product/views/widgets/quantity_selector.dart';
 import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../domain/entities/product/product_entity.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends StatefulWidget {
   final ProductEntity product;
   const ProductScreen({super.key, required this.product});
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  int _quantity = 1;
+
+  void _increment() {
+    if (_quantity < 10) setState(() => _quantity++);
+  }
+
+  void _decrement() {
+    if (_quantity > 1) setState(() => _quantity--);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +43,7 @@ class ProductScreen extends StatelessWidget {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10.w),
               child: Image.network(
-                product.imagePath,
+                widget.product.imagePath,
                 height: 308.h,
                 width: double.infinity,
                 fit: BoxFit.contain,
@@ -33,7 +51,7 @@ class ProductScreen extends StatelessWidget {
             ),
             SizedBox(height: 35.h),
             Text(
-              product.name,
+              widget.product.name,
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 18.sp,
@@ -42,26 +60,42 @@ class ProductScreen extends StatelessWidget {
             ),
             SizedBox(height: 18.h),
             Text(
-              product.description,
+              widget.product.description,
               style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: 32.h),
             Row(
               children: [
                 Text(
-                  "${product.price}-${tr.eg}",
+                  "${widget.product.price}-${tr.eg}",
                   style: TextStyle(
                     color: AppColors.red,
                     fontWeight: FontWeight.w400,
                     fontSize: 20.sp,
                   ),
                 ),
-                Spacer(),
-                QuantitySelector(),
+                const Spacer(),
+                QuantitySelector(
+                  value: _quantity,
+                  onIncrement: _increment,
+                  onDecrement: _decrement,
+                ),
               ],
             ),
             SizedBox(height: 55.h),
-            CustomizedButton(title: tr.add_to_cart),
+            CustomizedButton(
+              title: tr.add_to_cart,
+              onTap: () {
+                context.read<CartCubit>().addToCart(
+                  widget.product,
+                  _quantity,
+                );
+                AppSnackBar.showSuccess(
+                  context,
+                  '${widget.product.name} ${tr.added_to_cart}',
+                );
+              },
+            ),
           ],
         ),
       ),
