@@ -1,14 +1,18 @@
 import 'package:e_commerce/data/repos/category_repo_impl.dart';
 import 'package:e_commerce/data/repos/get_slider_repo_impl.dart';
 import 'package:e_commerce/data/repos/product_repo_impl.dart';
+import 'package:e_commerce/data/repos/user_repo_impl.dart';
 import 'package:e_commerce/domain/contract/auth_repo.dart';
 import 'package:e_commerce/domain/contract/category_repo.dart';
 import 'package:e_commerce/domain/contract/get_slider_repo.dart';
 import 'package:e_commerce/domain/contract/product_repo.dart';
+import 'package:e_commerce/domain/contract/user_repo.dart';
 import 'package:e_commerce/domain/use_cases/get_categories_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_products_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_sliders_use_case.dart';
+import 'package:e_commerce/domain/use_cases/get_user_use_case.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_cubit.dart';
+import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/repos/auth_repo_impl.dart';
@@ -22,8 +26,8 @@ import '../network/api_helper.dart';
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
-  await initRouter();
   await APIHelper.init();
+  await initRouter();
   sl.registerLazySingleton<APIHelper>(() => APIHelper());
 
   //Repos
@@ -35,6 +39,7 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<CategoryRepo>(
     () => CategoryRepoImpl(apiHelper: sl()),
   );
+  sl.registerLazySingleton<UserRepo>(() => UserRepoImpl(apiHelper: sl()));
 
   //UseCases
   sl.registerFactory(() => LoginUseCase(repo: sl()));
@@ -42,6 +47,7 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => GetSliderUseCase(repo: sl()));
   sl.registerFactory(() => GetProductsUseCase(repo: sl()));
   sl.registerFactory(() => GetCategoriesUseCase(repo: sl()));
+  sl.registerFactory(() => GetUserUseCase(repo: sl()));
 
   //Cubits
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
@@ -53,4 +59,5 @@ Future<void> initDependencies() async {
       getCategoriesUseCase: sl(),
     ),
   );
+  sl.registerFactory(() => ProfileCubit(getUserUseCase: sl()));
 }
