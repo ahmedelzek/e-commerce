@@ -38,7 +38,7 @@ class _MasterScreenState extends State<MasterScreen> {
         onTap: changeTab,
         items: generateBottomNavItems({
           AppIcons.homeIcon: tr.home,
-          AppIcons.cartIcon: tr.cart,
+          AppIcons.cartIcon: tr.items,
           AppIcons.profileIcon2: tr.profile,
         }),
       ),

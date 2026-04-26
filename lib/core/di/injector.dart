@@ -12,12 +12,14 @@ import 'package:e_commerce/domain/contract/order_repo.dart';
 import 'package:e_commerce/domain/contract/product_repo.dart';
 import 'package:e_commerce/domain/contract/user_repo.dart';
 import 'package:e_commerce/domain/use_cases/get_categories_use_case.dart';
+import 'package:e_commerce/domain/use_cases/get_products_by_catgory_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_products_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_sliders_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_user_use_case.dart';
 import 'package:e_commerce/domain/use_cases/update_profile_use_case.dart';
 import 'package:e_commerce/features/checkout/cubit/checkout_cubit.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_cubit.dart';
+import 'package:e_commerce/features/master/pages/items/cubit/items_cubit.dart';
 import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
 import 'package:e_commerce/features/my_orders/cubit/my_orders_cubit.dart';
 import 'package:e_commerce/features/my_profile/cubit/update_profile_cubit.dart';
@@ -87,6 +89,7 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => CancelOrderUseCase(repo: sl()));
   sl.registerFactory(() => CompleteOrderUseCase(repo: sl()));
   sl.registerFactory(() => GetOrdersUseCase(repo: sl()));
+  sl.registerFactory(() => GetProductsByCategoryUseCase(repo: sl()));
 
   // Cubits
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
@@ -117,6 +120,11 @@ Future<void> initDependencies() async {
       getOrdersUseCase: sl(),
       cancelOrderUseCase: sl(),
       completeOrderUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => ItemsCubit(
+      getCategoriesUseCase: sl(),
     ),
   );
 }

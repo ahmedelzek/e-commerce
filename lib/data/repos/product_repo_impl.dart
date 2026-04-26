@@ -30,4 +30,23 @@ class ProductRepoImpl extends ProductRepo {
       return left(ApiResponse.fromError(e).message);
     }
   }
+  @override
+  Future<Either<String, ProductResponseEntity>> getProductsByCategory(int categoryId) async {
+    try {
+      final result = await apiHelper.getRequest(
+        endPoint: EndPoints.products,
+        queryParams: {'category_id': categoryId},
+      );
+
+      if (result.status) {
+        return Right(
+          ProductResponseModel.fromJson(result.data as Map<String, dynamic>),
+        );
+      } else {
+        return Left(result.message);
+      }
+    } catch (e) {
+      return Left(ApiResponse.fromError(e).message);
+    }
+  }
 }

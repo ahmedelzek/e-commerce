@@ -55,7 +55,7 @@ class CustomizedProductItem extends StatelessWidget {
             ),
             SizedBox(height: 4.h),
             Text(
-              "${tr.eg}",
+              "\$ $price",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 12.sp,
