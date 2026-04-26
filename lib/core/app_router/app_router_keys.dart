@@ -12,4 +12,5 @@ abstract class AppRouterKeys{
   static const String cart="/cart";
   static const String checkout="/checkout";
   static const String orderDetails="/order_details";
+  static const String search="/search";
 }

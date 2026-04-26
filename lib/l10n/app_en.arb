@@ -50,5 +50,7 @@
   "item": "item",
   "items": "items",
   "track_driver": "Track Driver",
-  "order_details": "Order Details"
+  "order_details": "Order Details",
+  "search_text": "Search any Product..",
+  "search": "Search.."
 }

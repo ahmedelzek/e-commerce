@@ -12,6 +12,7 @@ import 'package:e_commerce/features/master/master_screen.dart';
 import 'package:e_commerce/features/my_orders/views/my_orders_screen.dart';
 import 'package:e_commerce/features/my_profile/views/update_profile_screen.dart';
 import 'package:e_commerce/features/product/views/product_screen.dart';
+import 'package:e_commerce/features/search/views/search_screen.dart';
 import 'package:e_commerce/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -92,6 +93,11 @@ Future<void> initRouter() async {
         builder: (context, state) => OrderDetailsScreen(
           order: state.extra as OrderEntity,
         ),
+      ),
+      GoRoute(
+        path: AppRouterKeys.search,
+        name: AppRouterKeys.search,
+        builder: (context, state) => SearchScreen(),
       ),
     ],
   );

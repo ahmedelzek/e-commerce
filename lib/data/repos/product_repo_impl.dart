@@ -30,12 +30,15 @@ class ProductRepoImpl extends ProductRepo {
       return left(ApiResponse.fromError(e).message);
     }
   }
+
   @override
-  Future<Either<String, ProductResponseEntity>> getProductsByCategory(int categoryId) async {
+  Future<Either<String, ProductResponseEntity>> searchProducts(
+    String query,
+  ) async {
     try {
       final result = await apiHelper.getRequest(
-        endPoint: EndPoints.products,
-        queryParams: {'category_id': categoryId},
+        endPoint: "${EndPoints.products}/${EndPoints.search}",
+        queryParams: {'q': query},
       );
 
       if (result.status) {
@@ -49,4 +52,5 @@ class ProductRepoImpl extends ProductRepo {
       return Left(ApiResponse.fromError(e).message);
     }
   }
+
 }

@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../core/customized_widgets/customized_product_item.dart';
+import '../../../../../core/customized_widgets/customized_search_text_field.dart';
 import '../../../../../core/di/injector.dart';
 
 class HomePage extends StatelessWidget {
@@ -66,16 +67,14 @@ class HomePage extends StatelessWidget {
                     children: [
                       SizedBox(height: 28.h),
                       InkWell(
-                        onTap: () {
-                          print(categories.length);
-                        },
-                        child: Text(
-                          tr.all_featured,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.black,
-                          ),
+                        onTap: ()=>context.push(AppRouterKeys.search),
+                          child: SearchTextField(hintText: tr.search_text)),
+                      Text(
+                        tr.all_featured,
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.black,
                         ),
                       ),
                       SizedBox(height: 25.h),

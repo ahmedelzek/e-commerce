@@ -3,11 +3,11 @@ import 'package:dartz/dartz.dart';
 import '../contract/product_repo.dart';
 import '../entities/product/product_entity_response.dart';
 
-class GetProductsByCategoryUseCase {
+class SearchProductsUseCase {
   final ProductRepo repo;
-  GetProductsByCategoryUseCase({required this.repo});
+  SearchProductsUseCase({required this.repo});
 
   Future<Either<String, ProductResponseEntity>> call(
-      int categoryId,
-      ) => repo.getProductsByCategory(categoryId);
+      String query,
+      ) => repo.searchProducts(query);
 }
