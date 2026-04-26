@@ -53,4 +53,21 @@ class ProductRepoImpl extends ProductRepo {
     }
   }
 
+  @override
+  Future<Either<String, String>> addToFavorite(int id) async {
+    try {
+      final result = await apiHelper.postRequest(
+        endPoint: EndPoints.addFavorite,
+        data: {"product_id": id},
+      );
+
+      if (result.status) {
+        return Right(result.message);
+      } else {
+        return Left(result.message);
+      }
+    } catch (e) {
+      return Left(ApiResponse.fromError(e).message);
+    }
+  }
 }

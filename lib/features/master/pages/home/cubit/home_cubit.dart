@@ -63,4 +63,10 @@ class HomeCubit extends Cubit<HomeState> {
     currentIndex = index;
     emit(HomeSuccessState());
   }
+  List<ProductEntity> get favoriteProducts {
+    return products
+        ?.where((product) => product.isFavorite == true)
+        .toList() ??
+        [];
+  }
 }

@@ -11,6 +11,7 @@ import 'package:e_commerce/domain/contract/get_slider_repo.dart';
 import 'package:e_commerce/domain/contract/order_repo.dart';
 import 'package:e_commerce/domain/contract/product_repo.dart';
 import 'package:e_commerce/domain/contract/user_repo.dart';
+import 'package:e_commerce/domain/use_cases/add_to_favorite_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_categories_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_products_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_sliders_use_case.dart';
@@ -22,6 +23,7 @@ import 'package:e_commerce/features/master/pages/items/cubit/items_cubit.dart';
 import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
 import 'package:e_commerce/features/my_orders/cubit/my_orders_cubit.dart';
 import 'package:e_commerce/features/my_profile/cubit/update_profile_cubit.dart';
+import 'package:e_commerce/features/product/cubit/favorite_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -91,6 +93,7 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => CompleteOrderUseCase(repo: sl()));
   sl.registerFactory(() => GetOrdersUseCase(repo: sl()));
   sl.registerFactory(() => SearchProductsUseCase(repo: sl()));
+  sl.registerFactory(() => AddToFavoriteUseCase(repo: sl()));
 
   // Cubits
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
@@ -131,6 +134,11 @@ Future<void> initDependencies() async {
   sl.registerFactory(
     () => SearchCubit(
       searchUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => FavoriteCubit(
+      addToFavoriteUseCase: sl(),
     ),
   );
 }

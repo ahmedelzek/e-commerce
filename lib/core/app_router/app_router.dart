@@ -9,6 +9,7 @@ import 'package:e_commerce/features/auth/views/register/register_screen.dart';
 import 'package:e_commerce/features/cart/views/cart_screen.dart';
 import 'package:e_commerce/features/checkout/views/checkout_screen.dart';
 import 'package:e_commerce/features/master/master_screen.dart';
+import 'package:e_commerce/features/my_favorites/views/favorites_screen.dart';
 import 'package:e_commerce/features/my_orders/views/my_orders_screen.dart';
 import 'package:e_commerce/features/my_profile/views/update_profile_screen.dart';
 import 'package:e_commerce/features/product/views/product_screen.dart';
@@ -98,6 +99,11 @@ Future<void> initRouter() async {
         path: AppRouterKeys.search,
         name: AppRouterKeys.search,
         builder: (context, state) => SearchScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.myFavorites,
+        name: AppRouterKeys.myFavorites,
+        builder: (context, state) => FavoritesScreen(),
       ),
     ],
   );
