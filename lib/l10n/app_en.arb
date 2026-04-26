@@ -49,5 +49,6 @@
   "no_orders_found": "No orders found",
   "item": "item",
   "items": "items",
-  "track_driver": "Track Driver"
+  "track_driver": "Track Driver",
+  "order_details": "Order Details"
 }

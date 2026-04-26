@@ -11,4 +11,5 @@ abstract class AppRouterKeys{
   static const String myFavorites="/my_favorites";
   static const String cart="/cart";
   static const String checkout="/checkout";
+  static const String orderDetails="/order_details";
 }

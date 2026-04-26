@@ -16,6 +16,9 @@ import 'package:e_commerce/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/entities/order/order_entity.dart';
+import '../../features/my_orders/views/order_detials_screen.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 late final GoRouter appRouter;
 
@@ -82,6 +85,13 @@ Future<void> initRouter() async {
         path: AppRouterKeys.settings,
         name: AppRouterKeys.settings,
         builder: (context, state) => SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.orderDetails,
+        name: AppRouterKeys.orderDetails,
+        builder: (context, state) => OrderDetailsScreen(
+          order: state.extra as OrderEntity,
+        ),
       ),
     ],
   );

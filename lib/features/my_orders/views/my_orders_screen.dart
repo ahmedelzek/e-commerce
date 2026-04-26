@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/app_router/app_router_keys.dart';
 import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
@@ -7,6 +8,7 @@ import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/di/injector.dart';
 import '../../../domain/entities/order/order_entity.dart';
@@ -113,10 +115,15 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     return ListView.separated(
       padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
       itemCount: orders.length,
-      itemBuilder: (context, index) => CustomizedOrderCard(
-        order: orders[index],
-        onCancel: () => OrdersCubit.get(context).cancelOrder(orders[index].id),
-        onComplete: () => OrdersCubit.get(context).completeOrder(orders[index].id),
+      itemBuilder: (context, index) => InkWell(
+        onTap: (){
+          context.push(AppRouterKeys.orderDetails, extra: orders[index]);
+        },
+        child: CustomizedOrderCard(
+          order: orders[index],
+          onCancel: () => OrdersCubit.get(context).cancelOrder(orders[index].id),
+          onComplete: () => OrdersCubit.get(context).completeOrder(orders[index].id),
+        ),
       ),
       separatorBuilder: (context, index) => SizedBox(height: 10.h),
     );
