@@ -17,7 +17,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr;
+    final tr = LocalizationService.instance.tr(context);
     return BlocProvider(
       create: (context) => sl<ProfileCubit>()..getUserData(),
       child: BlocBuilder<ProfileCubit, ProfileState>(
@@ -97,6 +97,7 @@ class ProfilePage extends StatelessWidget {
                         CustomizedCard(
                           iconPath: AppIcons.bagIcon,
                           title: tr.my_orders,
+                          onTap: ()=>context.push(AppRouterKeys.myOrders),
                         ),
                         SizedBox(height: 25.h),
                         CustomizedCard(
@@ -107,6 +108,7 @@ class ProfilePage extends StatelessWidget {
                         CustomizedCard(
                           iconPath: AppIcons.settingsIcon,
                           title: tr.settings,
+                          onTap: ()=>context.push(AppRouterKeys.settings),
                         ),
                         SizedBox(height: 50.h),
                         Container(

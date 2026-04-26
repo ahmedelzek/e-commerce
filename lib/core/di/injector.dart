@@ -19,6 +19,7 @@ import 'package:e_commerce/domain/use_cases/update_profile_use_case.dart';
 import 'package:e_commerce/features/checkout/cubit/checkout_cubit.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_cubit.dart';
 import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
+import 'package:e_commerce/features/my_orders/cubit/my_orders_cubit.dart';
 import 'package:e_commerce/features/my_profile/cubit/update_profile_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -59,19 +60,15 @@ Future<void> initDependencies() async {
   // Repos
   sl.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(apiHelper: sl()));
   sl.registerLazySingleton<GetSliderRepo>(
-        () => GetSlidersRepoImpl(apiHelper: sl()),
+    () => GetSlidersRepoImpl(apiHelper: sl()),
   );
   sl.registerLazySingleton<ProductRepo>(() => ProductRepoImpl(apiHelper: sl()));
   sl.registerLazySingleton<CategoryRepo>(
-        () => CategoryRepoImpl(apiHelper: sl()),
+    () => CategoryRepoImpl(apiHelper: sl()),
   );
   sl.registerLazySingleton<UserRepo>(() => UserRepoImpl(apiHelper: sl()));
-  sl.registerLazySingleton<CartRepo>(
-        () => CartRepoImpl(localDataSource: sl()),
-  );
-  sl.registerLazySingleton<OrderRepo>(
-        () => OrderRepoImpl(apiHelper: sl()),
-  );
+  sl.registerLazySingleton<CartRepo>(() => CartRepoImpl(localDataSource: sl()));
+  sl.registerLazySingleton<OrderRepo>(() => OrderRepoImpl(apiHelper: sl()));
 
   // UseCases
   sl.registerFactory(() => LoginUseCase(repo: sl()));
@@ -95,7 +92,7 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
   sl.registerFactory(() => RegisterCubit(registerUseCase: sl()));
   sl.registerFactory(
-        () => HomeCubit(
+    () => HomeCubit(
       getSliderUseCase: sl(),
       getProductsUseCase: sl(),
       getCategoriesUseCase: sl(),
@@ -103,15 +100,17 @@ Future<void> initDependencies() async {
   );
   sl.registerFactory(() => ProfileCubit(getUserUseCase: sl()));
   sl.registerFactory(() => UpdateProfileCubit(updateProfileUseCase: sl()));
-  sl.registerLazySingleton(() => CartCubit(
-    getCartItemsUseCase: sl(),
-    addToCartUseCase: sl(),
-    removeFromCartUseCase: sl(),
-    updateQuantityUseCase: sl(),
-    clearCartUseCase: sl(),
-  ));
-  sl.registerFactory(() => CheckoutCubit(
-    placeOrderUseCase: sl(),
-    cartCubit: sl()
-  ));
+  sl.registerLazySingleton(
+    () => CartCubit(
+      getCartItemsUseCase: sl(),
+      addToCartUseCase: sl(),
+      removeFromCartUseCase: sl(),
+      updateQuantityUseCase: sl(),
+      clearCartUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => CheckoutCubit(placeOrderUseCase: sl(), cartCubit: sl()),
+  );
+  sl.registerFactory(() => MyOrdersCubit(getOrdersUseCase: sl()));
 }

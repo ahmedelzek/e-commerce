@@ -21,7 +21,7 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr;
+    final tr = LocalizationService.instance.tr(context);
 
     final cartCubit = CartCubit.get(context);
     final items = cartCubit.items;

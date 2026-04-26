@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr;
+    final tr = LocalizationService.instance.tr(context);
     return BlocProvider(
       create: (context) => sl<HomeCubit>()..getData(),
       child: Scaffold(

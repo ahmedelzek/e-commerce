@@ -40,5 +40,9 @@
   "quantity": "Quantity",
   "delivery_address": "Delivery Address",
   "address": "Address",
-  "address_prompt": "Type address here\nor pick from map"
+  "address_prompt": "Type address here\nor pick from map",
+  "completed": "Completed",
+  "active": "Active",
+  "canceled": "Canceled",
+  "language": "Language"
 }

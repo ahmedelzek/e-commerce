@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr;
+    final tr = LocalizationService.instance.tr(context);
     return BlocProvider(
       create: (context) => sl<LoginCubit>(),
       child: BlocConsumer<LoginCubit, LoginState>(

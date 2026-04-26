@@ -9,8 +9,10 @@ import 'package:e_commerce/features/auth/views/register/register_screen.dart';
 import 'package:e_commerce/features/cart/views/cart_screen.dart';
 import 'package:e_commerce/features/checkout/views/checkout_screen.dart';
 import 'package:e_commerce/features/master/master_screen.dart';
+import 'package:e_commerce/features/my_orders/views/my_orders_screen.dart';
 import 'package:e_commerce/features/my_profile/views/update_profile_screen.dart';
 import 'package:e_commerce/features/product/views/product_screen.dart';
+import 'package:e_commerce/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -70,6 +72,16 @@ Future<void> initRouter() async {
         path: AppRouterKeys.checkout,
         name: AppRouterKeys.checkout,
         builder: (context, state) => CheckoutScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.myOrders,
+        name: AppRouterKeys.myOrders,
+        builder: (context, state) => MyOrdersScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.settings,
+        name: AppRouterKeys.settings,
+        builder: (context, state) => SettingsScreen(),
       ),
     ],
   );

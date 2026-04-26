@@ -24,7 +24,7 @@ class CustomizedCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr;
+    final tr = LocalizationService.instance.tr(context);
     final product = cartItem.product;
     final totalPrice = product.price * cartItem.quantity;
 

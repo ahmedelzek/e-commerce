@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomizedProductItem extends StatelessWidget {
-
   final String productName;
   final String description;
   final String imagePath;
@@ -21,11 +20,13 @@ class CustomizedProductItem extends StatelessWidget {
     required this.price,
     required this.rate,
     required this.reviewCount,
-    this.onTap
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final tr = LocalizationService.instance.tr(context);
+
     return InkWell(
       onTap: onTap,
       child: ClipRRect(
@@ -33,11 +34,7 @@ class CustomizedProductItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              imagePath,
-              width: double.infinity,
-              height: 195.h,
-            ),
+            Image.network(imagePath, width: double.infinity, height: 195.h),
             SizedBox(height: 8.h),
             Text(
               productName,
@@ -58,7 +55,7 @@ class CustomizedProductItem extends StatelessWidget {
             ),
             SizedBox(height: 4.h),
             Text(
-              "$price-${LocalizationService.instance.tr.eg}",
+              "${tr.eg}",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 12.sp,
@@ -73,7 +70,10 @@ class CustomizedProductItem extends StatelessWidget {
     );
   }
 
-  Widget _buildStarRating({required double rating, required double reviewCount}) {
+  Widget _buildStarRating({
+    required double rating,
+    required double reviewCount,
+  }) {
     return Row(
       children: [
         Row(

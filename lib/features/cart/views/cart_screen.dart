@@ -21,7 +21,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr;
+    final tr = LocalizationService.instance.tr(context);
     return Scaffold(
       appBar: CustomizedAppBar(title: tr.cart, context: context),
       body: BlocBuilder<CartCubit, CartState>(

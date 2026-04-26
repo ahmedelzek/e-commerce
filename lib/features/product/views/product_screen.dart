@@ -32,7 +32,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr;
+    final tr = LocalizationService.instance.tr(context);
     return Scaffold(
       appBar: CustomizedAppBar(title: tr.product, context: context),
       body: Padding(
