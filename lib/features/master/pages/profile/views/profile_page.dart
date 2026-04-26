@@ -103,6 +103,7 @@ class ProfilePage extends StatelessWidget {
                         CustomizedCard(
                           iconPath: AppIcons.favoriteIcon,
                           title: tr.my_favorites,
+                          onTap: ()=>context.push(AppRouterKeys.myFavorites),
                         ),
                         SizedBox(height: 25.h),
                         CustomizedCard(

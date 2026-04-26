@@ -60,85 +60,87 @@ class HomePage extends StatelessWidget {
                 final sliders = cubit.sliders ?? [];
                 final products = cubit.products ?? [];
                 final categories = cubit.categories ?? [];
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 28.h),
-                      InkWell(
-                        onTap: ()=>context.push(AppRouterKeys.search),
-                          child: SearchTextField(hintText: tr.search_text)),
-                      Text(
-                        tr.all_featured,
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.black,
-                        ),
-                      ),
-                      SizedBox(height: 25.h),
-                      SizedBox(
-                        height: 100.h,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: categories.length,
-                          itemBuilder:
-                              (context, index) => CustomizedCategoryItem(
-                                name: categories[index].title,
-                                imagePath: categories[index].imagePath,
-                              ),
-                          separatorBuilder: (_, __) => SizedBox(width: 15.w),
-                        ),
-                      ),
-                      SizedBox(height: 39.h),
-                      CarouselSlider(
-                        options: CarouselOptions(
-                          height: 190.h,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 3),
-                          autoPlayAnimationDuration: const Duration(
-                            milliseconds: 700,
-                          ),
-                          enlargeCenterPage: true,
-                          viewportFraction: 1,
-                          onPageChanged:
-                              (index, reason) => cubit.updateIndex(index),
-                        ),
-                        items:
-                            sliders.map((slider) {
-                              return CustomizedSlidesItems(
-                                title: slider.title ?? "",
-                                description: slider.description ?? "",
-                                imagePath: slider.imagePath,
-                              );
-                            }).toList(),
-                      ),
-                      SizedBox(height: 12.h),
-                      Center(
-                        child: AnimatedSmoothIndicator(
-                          activeIndex: cubit.currentIndex,
-                          count: sliders.length,
-                          effect: ScrollingDotsEffect(
-                            activeDotColor: AppColors.red,
-                            dotColor: AppColors.grey,
-                            dotHeight: 9.h,
-                            dotWidth: 9.w,
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 22.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 28.h),
+                        InkWell(
+                          onTap: ()=>context.push(AppRouterKeys.search),
+                            child: SearchTextField(hintText: tr.search_text)),
+                        Text(
+                          tr.all_featured,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.black,
                           ),
                         ),
-                      ),
-                      SizedBox(height: 32.h),
-                      Text(
-                        tr.recommended,
-                        style: TextStyle(
-                          color: AppColors.black,
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
+                        SizedBox(height: 25.h),
+                        SizedBox(
+                          height: 100.h,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: categories.length,
+                            itemBuilder:
+                                (context, index) => CustomizedCategoryItem(
+                                  name: categories[index].title,
+                                  imagePath: categories[index].imagePath,
+                                ),
+                            separatorBuilder: (_, __) => SizedBox(width: 15.w),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 12.h),
-                      Expanded(
-                        child: GridView.builder(
+                        SizedBox(height: 39.h),
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: 190.h,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            autoPlayAnimationDuration: const Duration(
+                              milliseconds: 700,
+                            ),
+                            enlargeCenterPage: true,
+                            viewportFraction: 1,
+                            onPageChanged:
+                                (index, reason) => cubit.updateIndex(index),
+                          ),
+                          items:
+                              sliders.map((slider) {
+                                return CustomizedSlidesItems(
+                                  title: slider.title ?? "",
+                                  description: slider.description ?? "",
+                                  imagePath: slider.imagePath,
+                                );
+                              }).toList(),
+                        ),
+                        SizedBox(height: 12.h),
+                        Center(
+                          child: AnimatedSmoothIndicator(
+                            activeIndex: cubit.currentIndex,
+                            count: sliders.length,
+                            effect: ScrollingDotsEffect(
+                              activeDotColor: AppColors.red,
+                              dotColor: AppColors.grey,
+                              dotHeight: 9.h,
+                              dotWidth: 9.w,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 32.h),
+                        Text(
+                          tr.recommended,
+                          style: TextStyle(
+                            color: AppColors.black,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: products.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -160,8 +162,8 @@ class HomePage extends StatelessWidget {
                             );
                           },
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               }
