@@ -57,8 +57,7 @@ class OrderRepoImpl extends OrderRepo {
       ) async {
     try {
       final result = await apiHelper.postRequest(
-        endPoint: EndPoints.cancelOrder,
-        data: {'order_id': orderId},
+        endPoint: "${EndPoints.getOrders}/${EndPoints.cancelOrder}/$orderId",
       );
 
       if (result.status) {
@@ -79,8 +78,7 @@ class OrderRepoImpl extends OrderRepo {
       ) async {
     try {
       final result = await apiHelper.postRequest(
-        endPoint: EndPoints.completeOrder,
-        data: {'order_id': orderId},
+        endPoint: "${EndPoints.getOrders}/${EndPoints.completeOrder}/$orderId",
       );
 
       if (result.status) {

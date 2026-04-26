@@ -7,12 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../domain/entities/order/order_entity.dart';
-import '../../../../domain/entities/order/order_item_entity.dart';
 
 class CustomizedOrderCard extends StatelessWidget {
   final OrderEntity order;
+  final VoidCallback? onCancel;
+  final VoidCallback? onComplete;
 
-  const CustomizedOrderCard({super.key, required this.order});
+  const CustomizedOrderCard({
+    super.key,
+    required this.order,
+    this.onCancel,
+    this.onComplete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,6 @@ class CustomizedOrderCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -48,12 +53,13 @@ class CustomizedOrderCard extends StatelessWidget {
                   width: 70.w,
                   height: 70.h,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Image.asset(
-                    AppImages.dummyImage,
-                    width: 70.w,
-                    height: 70.h,
-                    fit: BoxFit.cover,
-                  ),
+                  errorBuilder:
+                      (_, __, ___) => Image.asset(
+                        AppImages.dummyImage,
+                        width: 70.w,
+                        height: 70.h,
+                        fit: BoxFit.cover,
+                      ),
                 ),
               ),
 
@@ -113,15 +119,64 @@ class CustomizedOrderCard extends StatelessWidget {
           SizedBox(height: 12.h),
           Container(color: AppColors.grey.withValues(alpha: .2), height: 1.h),
           SizedBox(height: 12.h),
-
-          Row(
-            children: [
-              Expanded(child: CardButton(title: tr.canceled)),
-              SizedBox(width: 10.w),
-              Expanded(child: CardButton(title: tr.track_driver)),
-            ],
-          ),
+          _buildBottomSection(tr)
         ],
+      ),
+    );
+  }
+  Widget _buildBottomSection(dynamic tr) {
+    if (order.status == 1) {
+      return _buildStatusBadge(
+        label: tr.completed,
+        color: Colors.green,
+      );
+    }
+
+    if (order.status == 2) {
+      return _buildStatusBadge(
+        label: tr.canceled,
+        color: AppColors.red,
+      );
+    }
+
+    // active → show buttons
+    return Row(
+      children: [
+        Expanded(
+          child: CardButton(
+            title: tr.canceled,
+            onTap: onCancel,
+          ),
+        ),
+        SizedBox(width: 10.w),
+        Expanded(
+          child: CardButton(
+            title: tr.track_driver,
+            onTap: onComplete,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatusBadge({required String label, required Color color}) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 8.h),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .1),
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: color.withValues(alpha: .4)),
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.w600,
+            fontSize: 13.sp,
+          ),
+        ),
       ),
     );
   }

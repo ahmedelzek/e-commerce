@@ -115,6 +115,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
       itemCount: orders.length,
       itemBuilder: (context, index) => CustomizedOrderCard(
         order: orders[index],
+        onCancel: () => OrdersCubit.get(context).cancelOrder(orders[index].id),
+        onComplete: () => OrdersCubit.get(context).completeOrder(orders[index].id),
       ),
       separatorBuilder: (context, index) => SizedBox(height: 10.h),
     );
