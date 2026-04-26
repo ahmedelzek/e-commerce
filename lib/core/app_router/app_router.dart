@@ -7,6 +7,7 @@ import 'package:e_commerce/features/auth/views/login/login_screen.dart';
 import 'package:e_commerce/features/auth/views/main_auth/auth_screen.dart';
 import 'package:e_commerce/features/auth/views/register/register_screen.dart';
 import 'package:e_commerce/features/cart/views/cart_screen.dart';
+import 'package:e_commerce/features/checkout/views/checkout_screen.dart';
 import 'package:e_commerce/features/master/master_screen.dart';
 import 'package:e_commerce/features/my_profile/views/update_profile_screen.dart';
 import 'package:e_commerce/features/product/views/product_screen.dart';
@@ -64,6 +65,11 @@ Future<void> initRouter() async {
         path: AppRouterKeys.cart,
         name: AppRouterKeys.cart,
         builder: (context, state) => CartScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.checkout,
+        name: AppRouterKeys.checkout,
+        builder: (context, state) => CheckoutScreen(),
       ),
     ],
   );

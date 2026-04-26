@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/app_router/app_router_keys.dart';
 import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
@@ -8,6 +9,7 @@ import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/customized_widgets/customized_cart_item.dart';
 
@@ -104,7 +106,6 @@ class CartScreen extends StatelessWidget {
 
                 SizedBox(height: 12.h),
 
-                // Subtotal
                 _buildPriceRow(
                   label: tr.subtotal,
                   value: '\$ ${subtotal.toStringAsFixed(2)}',
@@ -112,7 +113,6 @@ class CartScreen extends StatelessWidget {
 
                 SizedBox(height: 12.h),
 
-                // Tax
                 _buildPriceRow(
                   label: tr.tax,
                   value: '\$ ${_tax.toStringAsFixed(2)}',
@@ -120,7 +120,6 @@ class CartScreen extends StatelessWidget {
 
                 SizedBox(height: 12.h),
 
-                // Delivery Fee
                 _buildPriceRow(
                   label: tr.delivery_fee,
                   value: '\$ ${_deliveryFee.toStringAsFixed(2)}',
@@ -128,7 +127,6 @@ class CartScreen extends StatelessWidget {
 
                 SizedBox(height: 12.h),
 
-                // Divider
                 Container(
                   height: 1.h,
                   width: double.infinity,
@@ -137,7 +135,6 @@ class CartScreen extends StatelessWidget {
 
                 SizedBox(height: 12.h),
 
-                // Order Total
                 Row(
                   children: [
                     Text(
@@ -160,7 +157,7 @@ class CartScreen extends StatelessWidget {
                 ),
 
                 SizedBox(height: 35.h),
-                CustomizedButton(title: tr.checkout),
+                CustomizedButton(title: tr.checkout, onTap: ()=>context.push(AppRouterKeys.checkout)),
                 SizedBox(height: 15.h),
               ],
             ),

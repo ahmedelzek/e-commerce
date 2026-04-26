@@ -8,16 +8,18 @@ import '../../domain/entities/cart/cart.dart';
 
 class CustomizedCartItem extends StatelessWidget {
   final CartItemEntity cartItem;
-  final VoidCallback onIncrement;
-  final VoidCallback onDecrement;
-  final VoidCallback onRemove;
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
+  final VoidCallback? onRemove;
+  final bool showQuantitySelector;
 
   const CustomizedCartItem({
     super.key,
     required this.cartItem,
-    required this.onIncrement,
-    required this.onDecrement,
-    required this.onRemove,
+    this.onIncrement,
+    this.onDecrement,
+    this.onRemove,
+    this.showQuantitySelector = true,
   });
 
   @override
@@ -51,7 +53,7 @@ class CustomizedCartItem extends StatelessWidget {
                   product.imagePath,
                   width: 125.h,
                   height: 125.w,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                 ),
               ),
               SizedBox(width: 12.w),
@@ -88,18 +90,34 @@ class CustomizedCartItem extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 8.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        QuantitySelector(
-                          value: cartItem.quantity,
-                          onIncrement: onIncrement,
-                          onDecrement: cartItem.quantity <= 1
-                              ? onRemove
-                              : onDecrement,
-                        ),
-                      ],
-                    ),
+
+                    if (showQuantitySelector)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          QuantitySelector(
+                            value: cartItem.quantity,
+                            onIncrement: onIncrement ?? () {},
+                            onDecrement: cartItem.quantity <= 1
+                                ? onRemove ?? () {}
+                                : onDecrement ?? () {},
+                          ),
+                        ],
+                      )
+                    else
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            '${tr.quantity}: ${cartItem.quantity}',
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -111,7 +129,7 @@ class CustomizedCartItem extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${tr.total} (${cartItem.quantity}): ',
+                '${tr.quantity} (${cartItem.quantity}): ',
                 style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
               ),
               const Spacer(),

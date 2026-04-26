@@ -36,5 +36,9 @@
   "tax": "Tax and Fees",
   "delivery_fee": "Delivery Fee",
   "checkout": "Checkout",
-  "cart_empty": "Cart Is Empty"
+  "cart_empty": "Cart Is Empty",
+  "quantity": "Quantity",
+  "delivery_address": "Delivery Address",
+  "address": "Address",
+  "address_prompt": "Type address here\nor pick from map"
 }

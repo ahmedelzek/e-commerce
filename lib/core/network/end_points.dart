@@ -10,4 +10,8 @@ abstract class EndPoints {
   static const String categories = "categories";
   static const String user = "get_user_data";
   static const String updateProfile = "update_profile";
+  static const String placeOrder = 'place_order';
+  static const String cancelOrder = 'cancel_order';
+  static const String completeOrder = 'complete_order';
+  static const String getOrders = 'get_orders';
 }

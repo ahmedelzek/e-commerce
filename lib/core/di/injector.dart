@@ -1,12 +1,14 @@
 import 'package:e_commerce/data/repos/cart_repo_impl.dart';
 import 'package:e_commerce/data/repos/category_repo_impl.dart';
 import 'package:e_commerce/data/repos/get_slider_repo_impl.dart';
+import 'package:e_commerce/data/repos/order_repo_impl.dart';
 import 'package:e_commerce/data/repos/product_repo_impl.dart';
 import 'package:e_commerce/data/repos/user_repo_impl.dart';
 import 'package:e_commerce/domain/contract/auth_repo.dart';
 import 'package:e_commerce/domain/contract/cart_repo.dart';
 import 'package:e_commerce/domain/contract/category_repo.dart';
 import 'package:e_commerce/domain/contract/get_slider_repo.dart';
+import 'package:e_commerce/domain/contract/order_repo.dart';
 import 'package:e_commerce/domain/contract/product_repo.dart';
 import 'package:e_commerce/domain/contract/user_repo.dart';
 import 'package:e_commerce/domain/use_cases/get_categories_use_case.dart';
@@ -14,6 +16,7 @@ import 'package:e_commerce/domain/use_cases/get_products_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_sliders_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_user_use_case.dart';
 import 'package:e_commerce/domain/use_cases/update_profile_use_case.dart';
+import 'package:e_commerce/features/checkout/cubit/checkout_cubit.dart';
 import 'package:e_commerce/features/master/pages/home/cubit/home_cubit.dart';
 import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
 import 'package:e_commerce/features/my_profile/cubit/update_profile_cubit.dart';
@@ -22,8 +25,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../data/models/cart/cart_item_hive_model.dart';
 import '../../data/repos/auth_repo_impl.dart';
+import '../../domain/use_cases/cansel_order_use_case.dart';
 import '../../domain/use_cases/cart_use_cases.dart';
+import '../../domain/use_cases/complete_order_use_case.dart';
+import '../../domain/use_cases/get_orders_use_case.dart';
 import '../../domain/use_cases/login_use_case.dart';
+import '../../domain/use_cases/place_order_use_case.dart';
 import '../../domain/use_cases/register_use_case.dart';
 import '../../features/auth/cubit/login/login_cubit.dart';
 import '../../features/auth/cubit/register/register_cubit.dart';
@@ -62,6 +69,9 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<CartRepo>(
         () => CartRepoImpl(localDataSource: sl()),
   );
+  sl.registerLazySingleton<OrderRepo>(
+        () => OrderRepoImpl(apiHelper: sl()),
+  );
 
   // UseCases
   sl.registerFactory(() => LoginUseCase(repo: sl()));
@@ -76,6 +86,10 @@ Future<void> initDependencies() async {
   sl.registerFactory(() => RemoveFromCartUseCase(repo: sl()));
   sl.registerFactory(() => UpdateQuantityUseCase(repo: sl()));
   sl.registerFactory(() => ClearCartUseCase(repo: sl()));
+  sl.registerFactory(() => PlaceOrderUseCase(repo: sl()));
+  sl.registerFactory(() => CancelOrderUseCase(repo: sl()));
+  sl.registerFactory(() => CompleteOrderUseCase(repo: sl()));
+  sl.registerFactory(() => GetOrdersUseCase(repo: sl()));
 
   // Cubits
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
@@ -95,5 +109,9 @@ Future<void> initDependencies() async {
     removeFromCartUseCase: sl(),
     updateQuantityUseCase: sl(),
     clearCartUseCase: sl(),
+  ));
+  sl.registerFactory(() => CheckoutCubit(
+    placeOrderUseCase: sl(),
+    cartCubit: sl()
   ));
 }
