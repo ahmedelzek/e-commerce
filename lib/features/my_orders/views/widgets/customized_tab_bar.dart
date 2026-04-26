@@ -1,56 +1,45 @@
-import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/resources/app_colors.dart';
 
-import '../../../../../../core/resources/app_colors.dart';
+class CustomTabBar extends StatelessWidget {
+  final String text;
+  final bool isSelected;
+  final VoidCallback onPressed;
 
-class CustomizedTabBar extends StatefulWidget {
-  final Function(int index) onTap;
+  const CustomTabBar({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.isSelected = false,
+  });
 
-
-  const CustomizedTabBar({super.key, required this.onTap});
-
-  @override
-  State<CustomizedTabBar> createState() => _CustomizedTabBarState();
-}
-
-class _CustomizedTabBarState extends State<CustomizedTabBar> {
   @override
   Widget build(BuildContext context) {
-    final tr = LocalizationService.instance.tr(context);
-
-    return TabBar(
-      labelPadding: EdgeInsets.symmetric(horizontal: 3.w),
-      tabAlignment: TabAlignment.start,
-      isScrollable: true,
-      unselectedLabelColor: AppColors.red,
-      labelColor: AppColors.white,
-      dividerHeight: 0,
-      indicatorColor: Colors.transparent,
-      indicator: BoxDecoration(
-        color: AppColors.red,
-        borderRadius: BorderRadius.circular(30.r),
-      ),      onTap: widget.onTap,
-      tabs: [
-        _tabItem(title: tr.active),
-        _tabItem(title: tr.completed),
-        _tabItem(title: tr.canceled),
-      ],
-    );
-  }
-
-  Widget _tabItem({required String title}) {
-    return Tab(
-      child: Container(
-        height: 28.h,
-        width: 108.w,
+    return Center(
+      child: Align(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.r)),
-        child: Text(
-          title,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
+        child: GestureDetector(
+          onTap: onPressed,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            margin: EdgeInsets.only(right: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 30.w,),
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.red : AppColors.pink,
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: isSelected ? AppColors.white : AppColors.red,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13.sp,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

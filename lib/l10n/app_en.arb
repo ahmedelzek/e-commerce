@@ -44,5 +44,10 @@
   "completed": "Completed",
   "active": "Active",
   "canceled": "Canceled",
-  "language": "Language"
+  "language": "Language",
+  "order_number": "Order #",
+  "no_orders_found": "No orders found",
+  "item": "item",
+  "items": "items",
+  "track_driver": "Track Driver"
 }

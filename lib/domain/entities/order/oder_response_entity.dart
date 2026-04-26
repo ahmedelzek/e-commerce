@@ -1,4 +1,4 @@
-import 'order_entity.dart';
+import 'orders_entity.dart';
 
 class OrdersResponseEntity {
   final bool status;

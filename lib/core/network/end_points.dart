@@ -13,5 +13,5 @@ abstract class EndPoints {
   static const String placeOrder = 'place_order';
   static const String cancelOrder = 'cancel_order';
   static const String completeOrder = 'complete_order';
-  static const String getOrders = 'get_orders';
+  static const String getOrders = 'orders';
 }

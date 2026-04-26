@@ -1,9 +1,17 @@
 import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
+import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
 import 'package:e_commerce/features/my_orders/views/widgets/cusomized_order_card.dart';
+import 'package:e_commerce/features/my_orders/views/widgets/customized_tab_bar.dart';
 import 'package:e_commerce/l10n/app_tr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../core/di/injector.dart';
+import '../../../domain/entities/order/order_entity.dart';
+import '../cubit/my_orders_cubit.dart';
+import '../cubit/my_orders_state.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
@@ -15,93 +23,99 @@ class MyOrdersScreen extends StatefulWidget {
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
   int _selectedIndex = 0;
 
-  final List<List<int>> _orderLists = [
-    [1, 2, 3], // active
-    [1],        // completed
-    [1, 2],     // canceled
-  ];
-
   @override
   Widget build(BuildContext context) {
     final tr = LocalizationService.instance.tr(context);
-    return DefaultTabController(
-      length: 3,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: CustomizedAppBar(title: tr.my_orders, context: context),
-          body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 25.w,
-                    vertical: 10.h,
-                  ),
-                  child: TabBar(
-                    labelPadding: EdgeInsets.symmetric(horizontal: 3.w),
-                    tabAlignment: TabAlignment.start,
-                    isScrollable: true,
-                    unselectedLabelColor: AppColors.red,
-                    labelColor: AppColors.white,
-                    dividerHeight: 0,
-                    indicatorColor: Colors.transparent,
-                    indicator: BoxDecoration(
-                      color: AppColors.red,
-                      borderRadius: BorderRadius.circular(30.r),
+    final tabs = [tr.active, tr.completed, tr.canceled];
+
+    return BlocProvider(
+      create: (context) => sl<OrdersCubit>()..getOrders(),
+      child: Scaffold(
+        appBar: CustomizedAppBar(title: tr.my_orders, context: context),
+        body: BlocBuilder<OrdersCubit, OrdersState>(
+          builder: (context, state) {
+            if (state is OrdersLoadingState) {
+              return Center(
+                child: CircularProgressIndicator(color: AppColors.red),
+              );
+            }
+
+            if (state is OrdersErrorState) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(state.error),
+                    SizedBox(height: 12.h),
+                    ElevatedButton(
+                      onPressed: () => OrdersCubit.get(context).getOrders(),
+                      child:  Text(tr.retry),
                     ),
-                    onTap: (index) {
-                      setState(() => _selectedIndex = index);
-                    },
-                    tabs: [
-                      _tabItem(title: tr.active),
-                      _tabItem(title: tr.completed),
-                      _tabItem(title: tr.canceled),
-                    ],
-                  ),
+                  ],
                 ),
-              ),
-            ],
-            body: Column(
-              children: [
-                Expanded(child: _buildOrderList(_orderLists[_selectedIndex])),
-              ],
+              );
+            }
+
+            if (state is OrdersSuccessState) {
+              final currentList = [
+                state.orders.active,
+                state.orders.completed,
+                state.orders.canceled,
+              ][_selectedIndex];
+
+              return Column(
+                children: [
+                  SizedBox(height: 10.h),
+                  SizedBox(
+                    height: 40.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      itemCount: tabs.length,
+                      itemBuilder: (context, index) {
+                        return CustomTabBar(
+                          text: tabs[index],
+                          isSelected: _selectedIndex == index,
+                          onPressed: () => setState(() => _selectedIndex = index),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Expanded(child: _buildOrderList(currentList, context)),
+                ],
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrderList(List<OrderEntity> orders, BuildContext context) {
+    if (orders.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(AppImages.emptyOrder, width: 200.w, height: 200.w,),
+            Text(
+              LocalizationService.instance.tr(context).no_orders_found,
+              style: TextStyle(fontSize: 20.sp, color: AppColors.red, fontWeight: FontWeight.bold),
             ),
-          ),
+          ],
         ),
-      ),
-    );
-  }
-
-  Widget _tabItem({required String title}) {
-    return Tab(
-      child: Container(
-        height: 28.h,
-        width: 108.w,
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.r),
-          border: Border.all(color: AppColors.red),
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14.sp,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOrderList(List items) {
-    if (items.isEmpty) {
-      return const Center(child: Text('No orders found'));
+      );
     }
+
     return ListView.separated(
       padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
-      itemCount: items.length,
-      itemBuilder: (context, index) => const CustomizedOrderCard(),
+      itemCount: orders.length,
+      itemBuilder: (context, index) => CustomizedOrderCard(
+        order: orders[index],
+      ),
       separatorBuilder: (context, index) => SizedBox(height: 10.h),
     );
   }

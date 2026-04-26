@@ -112,5 +112,5 @@ Future<void> initDependencies() async {
   sl.registerFactory(
     () => CheckoutCubit(placeOrderUseCase: sl(), cartCubit: sl()),
   );
-  sl.registerFactory(() => MyOrdersCubit(getOrdersUseCase: sl()));
+  sl.registerFactory(() => OrdersCubit(getOrdersUseCase: sl()));
 }

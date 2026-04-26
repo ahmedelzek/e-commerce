@@ -1,14 +1,28 @@
-import 'package:e_commerce/domain/entities/order/order_item_entity.dart';
-import 'package:e_commerce/domain/entities/product/product_entity.dart';
+import 'driver_entity.dart';
+import 'order_item_entity.dart';
 
-class OrdersEntity {
-  final List<OrderItemEntity> active;
-  final List<OrderItemEntity> canceled;
-  final List<OrderItemEntity> completed;
+class OrderEntity {
+  final int id;
+  final int status;
+  final String orderDate;
+  final String? orderChangeDate;
+  final double subtotal;
+  final double shipping;
+  final double tax;
+  final double total;
+  final DriverEntity? driver;
+  final List<OrderItemEntity> items;
 
-  const OrdersEntity({
-    required this.active,
-    required this.canceled,
-    required this.completed,
+  const OrderEntity({
+    required this.id,
+    required this.status,
+    required this.orderDate,
+    this.orderChangeDate,
+    required this.subtotal,
+    required this.shipping,
+    required this.tax,
+    required this.total,
+    this.driver,
+    required this.items,
   });
 }

@@ -3,6 +3,7 @@ import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_app_snack_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/customized_widgets/customized_cart_item.dart';
+import 'package:e_commerce/domain/entities/order/order_requast_entity.dart';
 import 'package:e_commerce/features/cart/cubit/cart_cubit.dart';
 import 'package:e_commerce/features/checkout/cubit/checkout_cubit.dart';
 import 'package:e_commerce/features/checkout/cubit/checkout_state.dart';
@@ -79,7 +80,7 @@ class CheckoutScreen extends StatelessWidget {
                           () => CheckoutCubit.get(context).checkout(
                             items
                                 .map(
-                                  (cartItem) => OrderItemEntity(
+                                  (cartItem) => OrderItemRequestEntity(
                                     productId: cartItem.product.id,
                                     quantity: cartItem.quantity,
                                   ),

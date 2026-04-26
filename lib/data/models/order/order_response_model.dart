@@ -1,5 +1,5 @@
 import '../../../domain/entities/order/oder_response_entity.dart';
-import 'order_model.dart';
+import 'orders_model.dart';
 
 class OrdersResponseModel extends OrdersResponseEntity {
   const OrdersResponseModel({
