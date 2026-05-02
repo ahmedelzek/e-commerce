@@ -1,6 +1,9 @@
 abstract class FavoriteState {}
 
-class FavoriteInitialState extends FavoriteState {}
+class FavoriteInitialState extends FavoriteState {
+  final bool isFavorite ;
+  FavoriteInitialState({required this.isFavorite});
+}
 
 class FavoriteLoadingState extends FavoriteState {}
 
@@ -11,5 +14,6 @@ class FavoriteErrorState extends FavoriteState {
 
 class FavoriteSuccessState extends FavoriteState {
   final String success;
-  FavoriteSuccessState({required this.success});
+  final bool isFavorite;
+  FavoriteSuccessState({required this.success,required this.isFavorite});
 }

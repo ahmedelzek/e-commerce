@@ -38,7 +38,10 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     final tr = LocalizationService.instance.tr(context);
     return BlocProvider(
-      create: (context)=>sl<FavoriteCubit>(),
+      create: (context)=>FavoriteCubit(
+        addToFavoriteUseCase: sl(),
+        isFavorite: widget.product.isFavorite,
+      )..init(widget.product.isFavorite),
       child: Scaffold(
         appBar: CustomizedAppBar(title: tr.product, context: context),
         body: Padding(
@@ -75,13 +78,19 @@ class _ProductScreenState extends State<ProductScreen> {
                       if(state is FavoriteErrorState){
                         AppSnackBar.showSuccess(context, state.error);
                       }
+                      if(state is FavoriteLoadingState){
+                        AppSnackBar.showWarning(context, "Loading...");
+                      }
                     },
                     builder: (context, state) {
                       final cubit = FavoriteCubit.get(context);
+                      bool isFavorite = widget.product.isFavorite;
+                      if (state is FavoriteInitialState) isFavorite = state.isFavorite;
+                      if (state is FavoriteSuccessState) isFavorite = state.isFavorite;
                       return IconButton(
                         onPressed: ()=>cubit.addToFavorite(widget.product.id),
                         icon:
-                            widget.product.isFavorite
+                            isFavorite
                                 ? Icon(Icons.favorite, color: AppColors.red)
                                 : Icon(Icons.favorite_border, color: AppColors.pink),
                       );

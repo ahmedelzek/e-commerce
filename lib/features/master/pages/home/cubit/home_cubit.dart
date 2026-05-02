@@ -48,10 +48,6 @@ class HomeCubit extends Cubit<HomeState> {
           (categoriesData) => categories = categoriesData.categories,
     );
 
-    print('sliders: ${sliders?.length}');
-    print('products: ${products?.length}');
-    print('categories: ${categories?.length}');
-
     if (errorMessage != null) {
       emit(HomeErrorState(error: errorMessage!));
     } else if (sliders != null && products != null && categories != null) {

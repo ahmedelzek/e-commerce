@@ -136,9 +136,4 @@ Future<void> initDependencies() async {
       searchUseCase: sl(),
     ),
   );
-  sl.registerFactory(
-    () => FavoriteCubit(
-      addToFavoriteUseCase: sl(),
-    ),
-  );
 }

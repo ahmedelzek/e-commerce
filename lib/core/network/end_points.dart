@@ -15,5 +15,5 @@ abstract class EndPoints {
   static const String completeOrder = 'complete';
   static const String getOrders = 'orders';
   static const String search = 'search';
-  static const String addFavorite='add_favorite';
+  static const String addFavorite='add_to_favorite';
 }
