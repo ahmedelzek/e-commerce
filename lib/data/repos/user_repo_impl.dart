@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:e_commerce/core/network/api_helper.dart';
 import 'package:e_commerce/data/models/user/update_profile_response_model.dart';
 import 'package:e_commerce/data/models/user/user_response_model.dart';
@@ -35,17 +36,22 @@ class UserRepoImpl extends UserRepo {
   @override
   Future<Either<String, String>> updateUser({
     required String name,
-    required double phone,
+    required String phone,
     String? imagePath,
   }) async {
     try {
+      final data = <String, dynamic>{
+        "name": name,
+        "phone": phone,
+        if(imagePath !=null)
+          "image": await MultipartFile.fromFile(
+            imagePath,
+            filename: imagePath.split('/').last,
+          )
+      };
       var result = await apiHelper.putRequest(
         endPoint: EndPoints.updateProfile,
-        data: {
-          'name': name,
-          'image': imagePath,
-          'phone': phone,
-        },
+        data: data
       );
 
       if (result.status) {

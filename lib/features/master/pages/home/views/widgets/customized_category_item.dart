@@ -33,6 +33,9 @@ class CustomizedCategoryItem extends StatelessWidget {
               width: 56.w,
               height: 56.h,
               fit: BoxFit.cover,
+              errorBuilder: (_,_,_){
+                return Center(child: Icon(Icons.broken_image, size: 56.w,));
+              },
             ),
           ),
         ),

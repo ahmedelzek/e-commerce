@@ -6,7 +6,7 @@ abstract class UserRepo {
 
   Future<Either<String, String>> updateUser({
     required String name,
-    required double phone,
+    required String phone,
     String? imagePath,
   });
 }

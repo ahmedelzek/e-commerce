@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/app_router/app_router_keys.dart';
+import 'package:e_commerce/core/customized_widgets/image_picker.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
 import 'package:e_commerce/features/master/pages/profile/cubit/profile_cubit.dart';
@@ -58,18 +59,23 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         Center(
                           child: ClipOval(
-                            child:
-                                user.imagePath == null
-                                    ? Image.asset(
-                                      AppImages.avatar,
-                                      height: 96.h,
-                                      width: 96.w,
-                                    )
-                                    : Image.network(
-                                      user.imagePath ?? "",
-                                      height: 96.h,
-                                      width: 96.h,
-                                    ),
+                            child: ImageManager(
+                              clickAble: false,
+                              unselectedImageBuilder: Image.asset(
+                                AppImages.avatar,
+                                height: 96.h,
+                                width: 96.w,
+                              ),
+                              networkImageBuilder:
+                                  user.imagePath == null
+                                      ? null
+                                      : Image.network(
+                                        user.imagePath!,
+                                        height: 96.h,
+                                        width: 96.w,
+                                        fit: BoxFit.cover,
+                                      ),
+                            ),
                           ),
                         ),
                         SizedBox(height: 19.h),
@@ -86,30 +92,30 @@ class ProfilePage extends StatelessWidget {
                           iconPath: AppIcons.profileIcon2,
                           title: tr.my_profile,
                           onTap: () async {
-                           await context.push(
+                            await context.push(
                               AppRouterKeys.updateProfile,
                               extra: state.user,
                             );
-                           ProfileCubit.get(context).getUserData();
+                            ProfileCubit.get(context).getUserData();
                           },
                         ),
                         SizedBox(height: 25.h),
                         CustomizedCard(
                           iconPath: AppIcons.bagIcon,
                           title: tr.my_orders,
-                          onTap: ()=>context.push(AppRouterKeys.myOrders),
+                          onTap: () => context.push(AppRouterKeys.myOrders),
                         ),
                         SizedBox(height: 25.h),
                         CustomizedCard(
                           iconPath: AppIcons.favoriteIcon,
                           title: tr.my_favorites,
-                          onTap: ()=>context.push(AppRouterKeys.myFavorites),
+                          onTap: () => context.push(AppRouterKeys.myFavorites),
                         ),
                         SizedBox(height: 25.h),
                         CustomizedCard(
                           iconPath: AppIcons.settingsIcon,
                           title: tr.settings,
-                          onTap: ()=>context.push(AppRouterKeys.settings),
+                          onTap: () => context.push(AppRouterKeys.settings),
                         ),
                         SizedBox(height: 50.h),
                         Container(

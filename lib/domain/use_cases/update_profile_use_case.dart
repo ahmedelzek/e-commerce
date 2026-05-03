@@ -7,6 +7,6 @@ class UpdateProfileUseCase {
   UpdateProfileUseCase({required this.repo});
 
   Future<Either<String, String>> call(
-      {required String name, required double phone}) =>
-      repo.updateUser(name: name, phone: phone);
+      {required String name, required String phone, String? imagePath}) =>
+      repo.updateUser(name: name, phone: phone, imagePath: imagePath);
 }

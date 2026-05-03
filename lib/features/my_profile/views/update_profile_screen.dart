@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_app_snack_bar.dart';
 import 'package:e_commerce/core/customized_widgets/customized_button.dart';
 import 'package:e_commerce/core/customized_widgets/customized_text_field.dart';
+import 'package:e_commerce/core/customized_widgets/image_picker.dart';
 import 'package:e_commerce/core/helpers/validator_helper.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/domain/entities/user/user_entity.dart';
@@ -29,11 +32,11 @@ class UpdateProfileScreen extends StatelessWidget {
         appBar: CustomizedAppBar(title: tr.profile, context: context),
         body: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
           listener: (context, state) {
-            if(state is UpdateProfileSuccessState){
+            if (state is UpdateProfileSuccessState) {
               AppSnackBar.showSuccess(context, state.success);
               context.pop();
             }
-            if(state is UpdateProfileErrorState){
+            if (state is UpdateProfileErrorState) {
               AppSnackBar.showError(context, state.error);
             }
           },
@@ -49,10 +52,32 @@ class UpdateProfileScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       ClipOval(
-                        child: Image.asset(
-                          AppImages.avatar,
-                          width: 96.w,
-                          height: 96.h,
+                        child: ImageManager(
+                          unselectedImageBuilder: Image.asset(
+                            AppImages.avatar,
+                            width: 96.w,
+                            height: 96.h,
+                          ),
+                          networkImageBuilder:
+                              user.imagePath == null
+                                  ? null
+                                  : Image.network(
+                                    user.imagePath!,
+                                    height: 96.h,
+                                    width: 96.w,
+                                    fit: BoxFit.cover,
+                                  ),
+                          onImageSelected: (path) => cubit.imagePath = path,
+                          selectedImageBuilder: (String imagePath) {
+                            return SizedBox(
+                              height: 96.h,
+                              width: 96.w,
+                              child: Image.file(
+                                File(imagePath),
+                                fit: BoxFit.contain,
+                              ),
+                            );
+                          },
                         ),
                       ),
                       SizedBox(height: 50.h),
