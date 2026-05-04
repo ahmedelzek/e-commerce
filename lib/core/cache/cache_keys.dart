@@ -4,4 +4,5 @@ abstract class CacheKeys {
   static const String isLoggedIn = 'is_logged_in';
   static const String isFirstTime = 'is_first_time';
   static const String userModel = 'user_model';
+  static const String onboardingSeen = 'onboarding_seen';
 }

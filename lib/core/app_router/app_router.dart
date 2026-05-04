@@ -12,6 +12,7 @@ import 'package:e_commerce/features/master/master_screen.dart';
 import 'package:e_commerce/features/my_favorites/views/favorites_screen.dart';
 import 'package:e_commerce/features/my_orders/views/my_orders_screen.dart';
 import 'package:e_commerce/features/my_profile/views/update_profile_screen.dart';
+import 'package:e_commerce/features/onboarding/views/onboarding_screen.dart';
 import 'package:e_commerce/features/product/views/product_screen.dart';
 import 'package:e_commerce/features/search/views/search_screen.dart';
 import 'package:e_commerce/features/settings/views/settings_screen.dart';
@@ -27,10 +28,17 @@ late final GoRouter appRouter;
 Future<void> initRouter() async {
   final token = await CacheHelper.getValue(CacheKeys.accessToken);
   final isLoggedIn = token != null && token.toString().isNotEmpty;
+  final onboardingSeen = await CacheHelper.getValue(CacheKeys.onboardingSeen);
+  final isOnboardingDone = onboardingSeen == true;
 
   appRouter = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: isLoggedIn ? AppRouterKeys.master : AppRouterKeys.authKey,
+    initialLocation:
+        !isOnboardingDone
+            ? AppRouterKeys.onboarding
+            : isLoggedIn
+            ? AppRouterKeys.master
+            : AppRouterKeys.authKey,
     routes: [
       GoRoute(
         path: AppRouterKeys.loginKey,
@@ -91,9 +99,9 @@ Future<void> initRouter() async {
       GoRoute(
         path: AppRouterKeys.orderDetails,
         name: AppRouterKeys.orderDetails,
-        builder: (context, state) => OrderDetailsScreen(
-          order: state.extra as OrderEntity,
-        ),
+        builder:
+            (context, state) =>
+                OrderDetailsScreen(order: state.extra as OrderEntity),
       ),
       GoRoute(
         path: AppRouterKeys.search,
@@ -104,6 +112,11 @@ Future<void> initRouter() async {
         path: AppRouterKeys.myFavorites,
         name: AppRouterKeys.myFavorites,
         builder: (context, state) => FavoritesScreen(),
+      ),
+      GoRoute(
+        path: AppRouterKeys.onboarding,
+        name: AppRouterKeys.onboarding,
+        builder: (context, state) => OnboardingScreen(),
       ),
     ],
   );

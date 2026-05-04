@@ -52,5 +52,15 @@
   "track_driver": "Track Driver",
   "order_details": "Order Details",
   "search_text": "Search any Product..",
-  "search": "Search.."
+  "search": "Search..",
+  "skip": "Skip",
+  "next": "Next",
+  "prev": "Prev",
+  "get_started": "Get Started",
+  "onboarding_1": "Choose Products",
+  "onboarding_2": "Make Payment",
+  "onboarding_3": "Get Your Order",
+  "onboarding_disc_1": "Browse our diverse collection of high-quality products at the best prices",
+  "onboarding_disc_2": "Multiple secure payment options for a smooth and comfortable shopping experience",
+  "onboarding_disc_3": "Fast and reliable delivery to all areas with order tracking capability"
 }
