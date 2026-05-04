@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/customized_widgets/customized_shimmer_effect.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/features/master/pages/items/cubit/items_cubit.dart';
 import 'package:e_commerce/features/master/pages/items/cubit/items_state.dart';
@@ -26,9 +27,9 @@ class ItemsPage extends StatelessWidget {
         body: BlocBuilder<ItemsCubit, ItemsState>(
           builder: (context, state) {
             if (state is ItemsLoadingState) {
-              return Center(
-                child: CircularProgressIndicator(color: AppColors.red),
-              );
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                  child: CustomizedShimmerEffect());
             }
 
             if (state is ItemsErrorState) {
@@ -54,7 +55,6 @@ class ItemsPage extends StatelessWidget {
                     ),
                     SizedBox(height: 25.h),
 
-                    // Categories
                     SizedBox(
                       height: 90.h,
                       child: ListView.separated(
@@ -86,7 +86,6 @@ class ItemsPage extends StatelessWidget {
                     ),
                     SizedBox(height: 12.h),
 
-                    // Products
                     Expanded(
                       child:
                           state.products.isEmpty

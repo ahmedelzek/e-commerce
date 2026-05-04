@@ -1,5 +1,6 @@
 import 'package:e_commerce/core/app_router/app_router_keys.dart';
 import 'package:e_commerce/core/customized_widgets/customized_app_bar.dart';
+import 'package:e_commerce/core/customized_widgets/customized_shimmer_effect.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
 import 'package:e_commerce/features/my_orders/views/widgets/cusomized_order_card.dart';
@@ -37,8 +38,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         body: BlocBuilder<OrdersCubit, OrdersState>(
           builder: (context, state) {
             if (state is OrdersLoadingState) {
-              return Center(
-                child: CircularProgressIndicator(color: AppColors.red),
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.h),
+                child: CustomizedShimmerEffect(),
               );
             }
 

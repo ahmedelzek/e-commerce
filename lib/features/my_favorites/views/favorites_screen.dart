@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/customized_widgets/customized_shimmer_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +8,6 @@ import '../../../core/app_router/app_router_keys.dart';
 import '../../../core/customized_widgets/customized_app_bar.dart';
 import '../../../core/customized_widgets/customized_product_item.dart';
 import '../../../core/di/injector.dart';
-import '../../../core/resources/app_colors.dart';
 import '../../../l10n/app_tr.dart';
 import '../../master/pages/home/cubit/home_cubit.dart';
 import '../../master/pages/home/cubit/home_state.dart';
@@ -20,15 +20,18 @@ class FavoritesScreen extends StatelessWidget {
     final tr = LocalizationService.instance.tr(context);
 
     return BlocProvider(
-      create: (context)=>sl<HomeCubit>()..getData(),
+      create: (context) => sl<HomeCubit>()..getData(),
       child: Scaffold(
         appBar: CustomizedAppBar(title: tr.my_favorites, context: context),
         body: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             final cubit = HomeCubit.get(context);
             final favorites = cubit.favoriteProducts;
-            if(state is HomeLoadingState){
-              return Center(child: CircularProgressIndicator(color: AppColors.red,),);
+            if (state is HomeLoadingState) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                child: CustomizedShimmerEffect(),
+              );
             }
 
             return GridView.builder(
@@ -49,10 +52,8 @@ class FavoritesScreen extends StatelessWidget {
                   price: product.price,
                   rate: product.rating,
                   reviewCount: product.rating,
-                  onTap: () => context.push(
-                    AppRouterKeys.product,
-                    extra: product,
-                  ),
+                  onTap:
+                      () => context.push(AppRouterKeys.product, extra: product),
                 );
               },
             );

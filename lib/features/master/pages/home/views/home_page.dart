@@ -16,6 +16,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../core/customized_widgets/customized_product_item.dart';
 import '../../../../../core/customized_widgets/customized_search_text_field.dart';
+import '../../../../../core/customized_widgets/customized_shimmer_effect.dart';
 import '../../../../../core/di/injector.dart';
 
 class HomePage extends StatelessWidget {
@@ -36,8 +37,9 @@ class HomePage extends StatelessWidget {
               final cubit = HomeCubit.get(context);
 
               if (state is HomeLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator(color: AppColors.red),
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 22.w),
+                  child: CustomizedShimmerEffect(),
                 );
               }
 

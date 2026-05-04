@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../cache/cache_helper.dart';
@@ -12,16 +14,16 @@ class APIHelper {
   static Future init() async {
     _dio.interceptors.add(InterceptorsWrapper(
         onRequest: (options, handler) {
-          print("--- Headers : ${options.headers.toString()}");
-          print("--- endpoint : ${options.path.toString()}");
+          log("--- Headers : ${options.headers.toString()}");
+          log("--- endpoint : ${options.path.toString()}");
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          print("--- Response : ${response.data.toString()}");
+          log("--- Response : ${response.data.toString()}");
           return handler.next(response);
         },
         onError: (DioException error, handler) async {
-          print("--- Error : ${error.response?.data.toString()}");
+          log("--- Error : ${error.response?.data.toString()}");
           var errorResponse = error.response?.data as Map<String, dynamic>;
           try {
             if (errorResponse['message']

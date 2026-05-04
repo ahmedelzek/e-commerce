@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/app_router/app_router_keys.dart';
+import 'package:e_commerce/core/customized_widgets/customized_shimmer_effect.dart';
 import 'package:e_commerce/core/customized_widgets/image_picker.dart';
 import 'package:e_commerce/core/resources/app_assets.dart';
 import 'package:e_commerce/core/resources/app_colors.dart';
@@ -37,9 +38,9 @@ class ProfilePage extends StatelessWidget {
             body: Builder(
               builder: (context) {
                 if (state is ProfileLoadingState) {
-                  return Center(
-                    child: CircularProgressIndicator(color: AppColors.red),
-                  );
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      child: CustomizedShimmerEffect());
                 }
 
                 if (state is ProfileErrorState) {
