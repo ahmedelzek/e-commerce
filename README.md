@@ -1,16 +1,77 @@
-# e_commerce
+#  E-commerce flutter application
 
-A new Flutter project.
+##  Overview
 
-## Getting Started
+This project is a Flutter application built with a strong focus on **Clean Architecture**, scalability, and maintainability. The goal is to create a well-structured and production-ready app that is easy to extend and maintain over time.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+##  Architecture
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The application follows a **3-layer architecture**:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 1. Data Layer
+
+* Responsible for handling data sources (APIs, Local Storage)
+* Contains repository implementations and data sources
+
+### 2. Domain Layer
+
+* Contains the core **business logic**
+* Includes entities and use cases
+* Completely independent from external frameworks
+
+### 3. Features Layer
+
+* Each feature is modular and self-contained
+* Includes UI and state management
+
+---
+
+##  Tech Stack & Tools
+
+* **Dio** → Handling REST API requests and error management
+* **Flutter Secure Storage** → Securely storing sensitive data
+* **Go Router** → Managing navigation in a scalable way
+* **Localization (l10n)** → Supporting multiple languages
+* **Get It** → Dependency Injection for better code organization
+
+---
+
+##  Features
+
+* Clean and scalable architecture
+* Secure data handling
+* Multi-language support
+* Modular feature-based structure
+* Maintainable and testable codebase
+
+---
+
+##  Getting Started
+
+### Prerequisites
+
+* Flutter SDK
+* Dart SDK
+
+##  Project Structure
+
+```
+lib/
+ ├── core/
+ ├── data/
+ ├── domain/
+ ├── features/
+ └── main.dart
+```
+
+##  Author
+
+Developed by [Ahmed Adel]
+
+---
+
+##  Feedback
+
+Feel free to open issues or submit pull requests to improve the project!
